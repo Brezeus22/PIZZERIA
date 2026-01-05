@@ -10,11 +10,10 @@ package menu_admin;
  */
 public class Menu_Admin {
 
-    /**
-     * @param args the command line arguments
-     */
+ 
     public static void main(String[] args) {
-        // TODO code application logic here
+        Menu2 objM = new Menu2();
+        objM.setVisible(true);
     }
     
 }
