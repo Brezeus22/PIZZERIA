@@ -4,12 +4,16 @@
  */
 package IGU;
 
+import Models.Usuarios;
+import Models.UsuariosDAO;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Personal
  */
 public class LoginInicio extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginInicio.class.getName());
 
     /**
@@ -17,6 +21,11 @@ public class LoginInicio extends javax.swing.JFrame {
      */
     public LoginInicio() {
         initComponents();
+        setSize(800,500);
+        setResizable(false);
+        setTitle("Login");
+        setLocationRelativeTo(null);
+        this.repaint();
     }
 
     /**
@@ -35,9 +44,9 @@ public class LoginInicio extends javax.swing.JFrame {
         Left = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtemail = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtpassword = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -52,19 +61,16 @@ public class LoginInicio extends javax.swing.JFrame {
         Right.setPreferredSize(new java.awt.Dimension(400, 500));
 
         jLabel5.setBackground(new java.awt.Color(204, 0, 51));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Personal\\OneDrive\\Documents\\NetBeansProjects\\PIZZERIA\\PIZZERIA\\Menu_Admin\\src\\Logo\\5053108919185640235 (2).jpg")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/5053108919185640235 (2).jpg"))); // NOI18N
 
         javax.swing.GroupLayout RightLayout = new javax.swing.GroupLayout(Right);
         Right.setLayout(RightLayout);
         RightLayout.setHorizontalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RightLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(22, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addContainerGap())
         );
@@ -72,10 +78,10 @@ public class LoginInicio extends javax.swing.JFrame {
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RightLayout.createSequentialGroup()
                 .addGap(62, 62, 62)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         jPanel1.add(Right);
@@ -94,10 +100,10 @@ public class LoginInicio extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Email *");
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtemail.setBackground(new java.awt.Color(255, 255, 255));
+        txtemail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtemailActionPerformed(evt);
             }
         });
 
@@ -105,8 +111,7 @@ public class LoginInicio extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Password *");
 
-        jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
-        jPasswordField1.setText("jPasswordField1");
+        txtpassword.setBackground(new java.awt.Color(255, 255, 255));
 
         jButton1.setBackground(new java.awt.Color(204, 255, 204));
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -126,9 +131,9 @@ public class LoginInicio extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                    .addComponent(txtemail, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
                     .addComponent(jLabel3)
-                    .addComponent(jPasswordField1)
+                    .addComponent(txtpassword)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftLayout.createSequentialGroup()
@@ -144,11 +149,11 @@ public class LoginInicio extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(126, Short.MAX_VALUE))
@@ -173,18 +178,50 @@ public class LoginInicio extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtemailActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String nombre_user = txtemail.getText();
+        String password = String.valueOf(txtpassword.getPassword());
+        
+        if("".equals(nombre_user) || "".equals(password)){
+            JOptionPane.showMessageDialog(null, "por favor llene todos los campos");
+        
+        }
+        else{
+            UsuariosDAO dao = new UsuariosDAO();
+            Usuarios usuariologin = dao.login(nombre_user, password);
+            
+            if(usuariologin != null){
+                JOptionPane.showMessageDialog(null, "Bienvenido al sistema");
+                
+                if(usuariologin.getRol().equalsIgnoreCase("administrador")){
+                    Menu2 admin = new Menu2();
+                    admin.setVisible(true);
+                
+                }
+                else if (usuariologin.getRol().equalsIgnoreCase("empleado")){
+                    EmpleadoPizza empleado = new EmpleadoPizza();
+                    empleado.setVisible(true);
+                }
+                
+                this.dispose();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Usuario o Password incorrecto","",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-   
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Left;
     private javax.swing.JPanel Right;
@@ -195,7 +232,7 @@ public class LoginInicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    public javax.swing.JTextField txtemail;
+    public javax.swing.JPasswordField txtpassword;
     // End of variables declaration//GEN-END:variables
 }

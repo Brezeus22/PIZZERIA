@@ -4,6 +4,9 @@
  */
 package menu_admin;
 
+import IGU.EmpleadoPizza;
+import IGU.LoginInicio;
+
 /**
  *
  * @author johan
@@ -12,7 +15,7 @@ public class Menu_Admin {
 
  
     public static void main(String[] args) {
-        Menu2 objM = new Menu2();
+        LoginInicio objM = new LoginInicio();
         objM.setVisible(true);
     }
     
