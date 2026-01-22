@@ -30,7 +30,7 @@ public class ProductosDAO {
                 objP.setCodigo(rs.getInt("codigo"));
                 objP.setNombre(rs.getString("nombre"));
                 objP.setDescripcion(rs.getString("descripcion"));
-                objP.setCategoria("categoria");
+                objP.setCategoria(rs.getString("categoria"));
                 objP.setTamanio(rs.getString("tamanio"));
                 objP.setPrecio(rs.getDouble("precio"));
                 productos.add(objP);
@@ -84,29 +84,34 @@ public class ProductosDAO {
     }
 
     //metodo para leer un unico producto
-    public Productos obtenerproducto(int codigo) {
+    public List<Productos> buscarproducto(String valor) {
+        List<Productos> productos = new ArrayList<>();
         Productos producto = null;
-        String sql = "SELECT FROM productos WHERE codigo = ?";
+        String sql = "SELECT* FROM productos WHERE nombre LIKE ? OR categoria LIKE ? OR codigo LIKE ?";
 
         try {
             con = ConexionSQL.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, codigo);
+            ps.setString(1,"%" + valor + "%" );
+            ps.setString(2, "%" + valor + "%");
+            ps.setString(3, "%" + valor + "%");
             rs = ps.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
+                producto = new  Productos();
                 producto.setCodigo(rs.getInt("codigo"));
                 producto.setNombre(rs.getString("nombre"));
                 producto.setDescripcion(rs.getString("descripcion"));
-                producto.setCategoria("categoria");
+                producto.setCategoria(rs.getString("categoria"));
                 producto.setTamanio(rs.getString("tamanio"));
                 producto.setPrecio(rs.getDouble("precio"));
+                productos.add(producto);
 
             }
         } catch (SQLException e) {
             System.err.println("Error al obtener el producto: " + e.getMessage());
         }
-        return producto;
+        return productos;
 
     }
 
@@ -164,7 +169,7 @@ public class ProductosDAO {
             con = ConexionSQL.getConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, codigo);
-            ps.execute();
+            ps.executeUpdate();
             return true;
         } catch (SQLException e) {
             System.err.println("Error al eliminar el producto: " + e.getMessage());

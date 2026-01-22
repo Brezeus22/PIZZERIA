@@ -40,6 +40,21 @@ public class Pago_Orden extends javax.swing.JFrame {
         txtiva.setText("$"+ String.format("%.2f",iva));
         txttotal.setText("$"+String.format("%.2f",(total + iva)));
         
+        cargarticket();
+        
+    }
+    
+    private void cargarticket(){
+        
+        ticket.setText("");
+        ticket.append("Cantidad | Producto | Precio\n");
+        
+        for(String items : detalles){
+            ticket.append(items + "\n");
+        
+        
+        }
+    
     }
 
     /**
@@ -64,7 +79,7 @@ public class Pago_Orden extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel20 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        ticket = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -169,13 +184,13 @@ public class Pago_Orden extends javax.swing.JFrame {
                 .addGap(16, 16, 16))
         );
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTextArea1.setForeground(new java.awt.Color(0, 0, 0));
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        ticket.setEditable(false);
+        ticket.setBackground(new java.awt.Color(255, 255, 255));
+        ticket.setColumns(20);
+        ticket.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        ticket.setForeground(new java.awt.Color(0, 0, 0));
+        ticket.setRows(5);
+        jScrollPane1.setViewportView(ticket);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -249,7 +264,7 @@ public class Pago_Orden extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea ticket;
     public javax.swing.JLabel txtiva;
     public javax.swing.JLabel txtsubtotal;
     public javax.swing.JLabel txttotal;

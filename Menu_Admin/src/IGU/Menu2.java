@@ -4,6 +4,15 @@
  */
 package IGU;
 
+import Models.Empleados;
+import Models.EmpleadosDAO;
+import Models.Productos;
+import Models.ProductosDAO;
+import Models.Usuarios;
+import Models.UsuariosDAO;
+import controladores.EmpleadosController;
+import controladores.ProductosControllers;
+
 /**
  *
  * @author admin
@@ -15,6 +24,17 @@ public class Menu2 extends javax.swing.JFrame {
     /**
      * Creates new form Menu2
      */
+    
+    //productos
+    Productos productos = new Productos();
+    ProductosDAO productosdao = new ProductosDAO();
+    //empleados
+    Empleados empleados = new Empleados();
+    EmpleadosDAO empleadosdao = new EmpleadosDAO();
+    //usuario
+    Usuarios usuario = new Usuarios();
+    UsuariosDAO usuariodao = new UsuariosDAO();
+    
     public Menu2() {
         initComponents();
         setSize(1208,680);
@@ -22,6 +42,14 @@ public class Menu2 extends javax.swing.JFrame {
         setTitle("Panel de Administracion");
         setLocationRelativeTo(null);
         this.repaint();
+        
+        //controlador de productos
+        ProductosControllers productosControllers = new ProductosControllers(productos, productosdao, this);
+        productosControllers.inicializartabla();
+        productosControllers.cargartabla();
+        EmpleadosController empleadosController = new EmpleadosController(usuario, usuariodao, empleados, empleadosdao, this);
+        empleadosController.inicializartabla();
+        empleadosController.cargartabla();
     }
 
     /**
@@ -68,54 +96,56 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel42 = new javax.swing.JLabel();
         jPanel19 = new javax.swing.JPanel();
         jLabel43 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        ProductosIGU = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        txtcodigo = new javax.swing.JTextField();
+        txtnombre_producto = new javax.swing.JTextField();
+        txtprecio = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField4 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        ComboBoxcategoria = new javax.swing.JComboBox<>();
+        txtdescripcion = new javax.swing.JTextField();
+        btnmodificar_productos = new javax.swing.JButton();
+        btneliminar_productos = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton_Guardar1 = new javax.swing.JButton();
+        btnguardar_productos = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        comboxtamanio = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtbuscar__producto = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tabla_producto = new javax.swing.JTable();
         jLabel38 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
-        jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
-        jTextField20 = new javax.swing.JTextField();
-        jTextField21 = new javax.swing.JTextField();
-        jTextField22 = new javax.swing.JTextField();
+        txtcedula_emp = new javax.swing.JTextField();
+        txtnombre_emp = new javax.swing.JTextField();
+        txtapellido_emp = new javax.swing.JTextField();
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
-        jTextField23 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        txtdireccion_emp = new javax.swing.JTextField();
+        btnmodificar_emp = new javax.swing.JButton();
+        btneliminar_emp = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
-        jTextField24 = new javax.swing.JTextField();
-        jButton_Guardar5 = new javax.swing.JButton();
+        txtedad_emp = new javax.swing.JTextField();
+        btnguardar_emp = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
         jLabel44 = new javax.swing.JLabel();
         jLabel45 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jTextField27 = new javax.swing.JTextField();
+        ComboBox_Rol = new javax.swing.JComboBox<>();
+        txtpassword = new javax.swing.JPasswordField();
+        txtnombre_user = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable_ventas1 = new javax.swing.JTable();
+        jTable_emp = new javax.swing.JTable();
         jLabel33 = new javax.swing.JLabel();
-        jTextField25 = new javax.swing.JTextField();
+        txtbuscar_emp = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable_ventas = new javax.swing.JTable();
@@ -559,8 +589,8 @@ public class Menu2 extends javax.swing.JFrame {
 
         jTabbed_clientes.addTab("Home", jPanel1);
 
-        jPanel2.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        ProductosIGU.setBackground(new java.awt.Color(102, 102, 102));
+        ProductosIGU.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14), new java.awt.Color(0, 0, 0))); // NOI18N
@@ -578,22 +608,22 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Precio");
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
+        txtcodigo.setBackground(new java.awt.Color(255, 255, 255));
+        txtcodigo.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtnombre_producto.setBackground(new java.awt.Color(255, 255, 255));
+        txtnombre_producto.setForeground(new java.awt.Color(0, 0, 0));
+        txtnombre_producto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtnombre_productoActionPerformed(evt);
             }
         });
 
-        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField3.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        txtprecio.setBackground(new java.awt.Color(255, 255, 255));
+        txtprecio.setForeground(new java.awt.Color(0, 0, 0));
+        txtprecio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                txtprecioActionPerformed(evt);
             }
         });
 
@@ -605,30 +635,39 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Categoria");
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pizza", "Bebida" }));
+        ComboBoxcategoria.setBackground(new java.awt.Color(255, 255, 255));
+        ComboBoxcategoria.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        ComboBoxcategoria.setForeground(new java.awt.Color(0, 0, 0));
+        ComboBoxcategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pizza", "Bebida" }));
 
-        jTextField4.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField4.setForeground(new java.awt.Color(0, 0, 0));
+        txtdescripcion.setBackground(new java.awt.Color(255, 255, 255));
+        txtdescripcion.setForeground(new java.awt.Color(0, 0, 0));
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(0, 0, 0));
-        jButton3.setText("Modificar");
+        btnmodificar_productos.setBackground(new java.awt.Color(255, 255, 255));
+        btnmodificar_productos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnmodificar_productos.setForeground(new java.awt.Color(0, 0, 0));
+        btnmodificar_productos.setText("Modificar");
 
-        jButton4.setBackground(new java.awt.Color(255, 255, 255));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(0, 0, 0));
-        jButton4.setText("Eliminar");
+        btneliminar_productos.setBackground(new java.awt.Color(255, 255, 255));
+        btneliminar_productos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btneliminar_productos.setForeground(new java.awt.Color(0, 0, 0));
+        btneliminar_productos.setText("Eliminar");
 
         jButton5.setText("jButton5");
 
-        jButton_Guardar1.setBackground(new java.awt.Color(0, 204, 204));
-        jButton_Guardar1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton_Guardar1.setForeground(new java.awt.Color(0, 0, 0));
-        jButton_Guardar1.setText("Guardar");
+        btnguardar_productos.setBackground(new java.awt.Color(0, 204, 204));
+        btnguardar_productos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnguardar_productos.setForeground(new java.awt.Color(0, 0, 0));
+        btnguardar_productos.setText("Guardar");
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setText("Tamaño");
+
+        comboxtamanio.setBackground(new java.awt.Color(255, 255, 255));
+        comboxtamanio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        comboxtamanio.setForeground(new java.awt.Color(0, 0, 0));
+        comboxtamanio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "pequenia", "mediana ", "grande" }));
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -642,13 +681,14 @@ public class Menu2 extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
+                    .addComponent(txtcodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(txtnombre_producto, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(txtprecio, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
                 .addGap(87, 87, 87)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel8))
                 .addGap(36, 36, 36)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
@@ -656,13 +696,15 @@ public class Menu2 extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtdescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(comboxtamanio, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ComboBoxcategoria, javax.swing.GroupLayout.Alignment.LEADING, 0, 110, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton_Guardar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btneliminar_productos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnmodificar_productos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnguardar_productos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(37, 37, 37))))
         );
         jPanel11Layout.setVerticalGroup(
@@ -672,81 +714,77 @@ public class Menu2 extends javax.swing.JFrame {
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel5)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton_Guardar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtdescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnguardar_productos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtnombre_producto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel3))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel6)))
-                        .addGap(26, 26, 26)
+                                .addComponent(ComboBoxcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6)
+                                .addComponent(btnmodificar_productos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)
+                            .addComponent(comboxtamanio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btneliminar_productos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(315, 315, 315)
+                        .addGap(419, 419, 419)
                         .addComponent(jButton5)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 920, 190));
+        ProductosIGU.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 920, 190));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Buscar:");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, -1, -1));
+        ProductosIGU.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, -1, -1));
 
-        jTextField5.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField5.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel2.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, 210, -1));
+        txtbuscar__producto.setBackground(new java.awt.Color(255, 255, 255));
+        txtbuscar__producto.setForeground(new java.awt.Color(0, 0, 0));
+        ProductosIGU.add(txtbuscar__producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, 210, -1));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tabla_producto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Codigo", "Nombre", "Descripcion", "Categoria", "Tamaño", "Cantidad", "Precio"
+                "Codigo", "Nombre", "Descripcion", "Categoria", "Tamanio", "precio"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tabla_producto);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 910, 200));
+        ProductosIGU.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 910, 200));
 
         jLabel38.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel38.setForeground(new java.awt.Color(255, 255, 255));
         jLabel38.setText("Productos Registrados");
-        jPanel2.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, -1, -1));
+        ProductosIGU.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, -1, -1));
 
-        jTabbed_clientes.addTab("Productos", jPanel2);
+        jTabbed_clientes.addTab("Productos", ProductosIGU);
 
         jPanel5.setBackground(new java.awt.Color(102, 102, 102));
 
         jPanel15.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Empleados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel15.setForeground(new java.awt.Color(0, 0, 0));
-
-        jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel28.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel28.setText("Nombre:");
 
         jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(0, 0, 0));
@@ -756,14 +794,14 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel30.setForeground(new java.awt.Color(0, 0, 0));
         jLabel30.setText("Cedula:");
 
-        jTextField20.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField20.setForeground(new java.awt.Color(0, 0, 0));
+        txtcedula_emp.setBackground(new java.awt.Color(255, 255, 255));
+        txtcedula_emp.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField21.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField21.setForeground(new java.awt.Color(0, 0, 0));
+        txtnombre_emp.setBackground(new java.awt.Color(255, 255, 255));
+        txtnombre_emp.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField22.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField22.setForeground(new java.awt.Color(0, 0, 0));
+        txtapellido_emp.setBackground(new java.awt.Color(255, 255, 255));
+        txtapellido_emp.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(0, 0, 0));
@@ -773,28 +811,28 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel32.setForeground(new java.awt.Color(0, 0, 0));
         jLabel32.setText("Edad:");
 
-        jTextField23.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField23.setForeground(new java.awt.Color(0, 0, 0));
+        txtdireccion_emp.setBackground(new java.awt.Color(255, 255, 255));
+        txtdireccion_emp.setForeground(new java.awt.Color(0, 0, 0));
 
-        jButton6.setBackground(new java.awt.Color(255, 255, 255));
-        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(0, 0, 0));
-        jButton6.setText("Modificar");
+        btnmodificar_emp.setBackground(new java.awt.Color(255, 255, 255));
+        btnmodificar_emp.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnmodificar_emp.setForeground(new java.awt.Color(0, 0, 0));
+        btnmodificar_emp.setText("Modificar");
 
-        jButton12.setBackground(new java.awt.Color(255, 255, 255));
-        jButton12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton12.setForeground(new java.awt.Color(0, 0, 0));
-        jButton12.setText("Eliminar");
+        btneliminar_emp.setBackground(new java.awt.Color(255, 255, 255));
+        btneliminar_emp.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btneliminar_emp.setForeground(new java.awt.Color(0, 0, 0));
+        btneliminar_emp.setText("Eliminar");
 
         jButton13.setText("jButton5");
 
-        jTextField24.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField24.setForeground(new java.awt.Color(0, 0, 0));
+        txtedad_emp.setBackground(new java.awt.Color(255, 255, 255));
+        txtedad_emp.setForeground(new java.awt.Color(0, 0, 0));
 
-        jButton_Guardar5.setBackground(new java.awt.Color(0, 204, 204));
-        jButton_Guardar5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton_Guardar5.setForeground(new java.awt.Color(0, 0, 0));
-        jButton_Guardar5.setText("Guardar");
+        btnguardar_emp.setBackground(new java.awt.Color(0, 204, 204));
+        btnguardar_emp.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnguardar_emp.setForeground(new java.awt.Color(0, 0, 0));
+        btnguardar_emp.setText("Guardar");
 
         jLabel22.setBackground(new java.awt.Color(0, 0, 0));
         jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -811,18 +849,22 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel45.setForeground(new java.awt.Color(0, 0, 0));
         jLabel45.setText("Password");
 
-        jComboBox2.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jComboBox2.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Empleado" }));
+        ComboBox_Rol.setBackground(new java.awt.Color(255, 255, 255));
+        ComboBox_Rol.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        ComboBox_Rol.setForeground(new java.awt.Color(0, 0, 0));
+        ComboBox_Rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Empleado" }));
 
-        jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
-        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jPasswordField1.setForeground(new java.awt.Color(0, 0, 0));
+        txtpassword.setBackground(new java.awt.Color(255, 255, 255));
+        txtpassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtpassword.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField27.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField27.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTextField27.setForeground(new java.awt.Color(0, 0, 0));
+        txtnombre_user.setBackground(new java.awt.Color(255, 255, 255));
+        txtnombre_user.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtnombre_user.setForeground(new java.awt.Color(0, 0, 0));
+
+        jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel28.setText("Nombre:");
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -831,16 +873,16 @@ public class Menu2 extends javax.swing.JFrame {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel28)
                     .addComponent(jLabel29)
                     .addComponent(jLabel30)
-                    .addComponent(jLabel44))
+                    .addComponent(jLabel44)
+                    .addComponent(jLabel28))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField20, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(jTextField21)
-                    .addComponent(jTextField22)
-                    .addComponent(jTextField27))
+                    .addComponent(txtcedula_emp, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(txtnombre_emp)
+                    .addComponent(txtapellido_emp)
+                    .addComponent(txtnombre_user))
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel15Layout.createSequentialGroup()
@@ -856,10 +898,10 @@ public class Menu2 extends javax.swing.JFrame {
                             .addComponent(jLabel31))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField24, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(jTextField23, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPasswordField1))
+                    .addComponent(txtedad_emp, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(txtdireccion_emp, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(ComboBox_Rol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtpassword))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
@@ -867,9 +909,9 @@ public class Menu2 extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton_Guardar5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btneliminar_emp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnmodificar_emp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnguardar_emp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(37, 37, 37))))
         );
         jPanel15Layout.setVerticalGroup(
@@ -878,17 +920,17 @@ public class Menu2 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel28)
-                        .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtcedula_emp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel31)
-                        .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton_Guardar5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtdireccion_emp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel30))
+                    .addComponent(btnguardar_emp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel29)
+                    .addComponent(txtnombre_emp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel32)
-                    .addComponent(jTextField24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtedad_emp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel28))
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -896,22 +938,22 @@ public class Menu2 extends javax.swing.JFrame {
                             .addGroup(jPanel15Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel30)))
+                                    .addComponent(txtapellido_emp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel29)))
                             .addComponent(jLabel22)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(ComboBox_Rol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnmodificar_emp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)))
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel45)
                     .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel44)
-                        .addComponent(jTextField27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtnombre_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btneliminar_emp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel15Layout.createSequentialGroup()
                         .addGap(355, 355, 355)
                         .addComponent(jButton13)))
@@ -922,7 +964,7 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel34.setForeground(new java.awt.Color(255, 255, 255));
         jLabel34.setText("Empleados Registrados");
 
-        jTable_ventas1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_emp.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -930,12 +972,12 @@ public class Menu2 extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Apellido", "Cedula", "Direccion", "Edad"
+                "Cedula", "Nombre", "Apellido", "Edad", "Direccion"
             }
         ));
-        jScrollPane6.setViewportView(jTable_ventas1);
-        if (jTable_ventas1.getColumnModel().getColumnCount() > 0) {
-            jTable_ventas1.getColumnModel().getColumn(2).setResizable(false);
+        jScrollPane6.setViewportView(jTable_emp);
+        if (jTable_emp.getColumnModel().getColumnCount() > 0) {
+            jTable_emp.getColumnModel().getColumn(2).setResizable(false);
         }
 
         jLabel33.setBackground(new java.awt.Color(255, 255, 255));
@@ -943,8 +985,8 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel33.setForeground(new java.awt.Color(255, 255, 255));
         jLabel33.setText("Buscar:");
 
-        jTextField25.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField25.setForeground(new java.awt.Color(0, 0, 0));
+        txtbuscar_emp.setBackground(new java.awt.Color(255, 255, 255));
+        txtbuscar_emp.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -960,8 +1002,8 @@ public class Menu2 extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addComponent(jLabel33)
-                        .addGap(32, 32, 32)
-                        .addComponent(jTextField25, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(txtbuscar_emp, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(363, 363, 363)
                         .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -977,13 +1019,12 @@ public class Menu2 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel33)
-                    .addComponent(jTextField25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtbuscar_emp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
 
-        jPanel15.getAccessibleContext().setAccessibleName("Empleados");
         jPanel15.getAccessibleContext().setAccessibleDescription("Empleados");
 
         jTabbed_clientes.addTab("Empleados", jPanel5);
@@ -1484,13 +1525,13 @@ public class Menu2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_Guardar2ActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtnombre_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombre_productoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtnombre_productoActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txtprecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtprecioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txtprecioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1519,31 +1560,33 @@ public class Menu2 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Clientes;
+    public javax.swing.JComboBox<String> ComboBox_Rol;
+    public javax.swing.JComboBox<String> ComboBoxcategoria;
     private javax.swing.JPanel EditarPerfil;
     private javax.swing.JPanel Empleados;
     private javax.swing.JPanel Fondo;
     private javax.swing.JPanel Home;
     private javax.swing.JPanel Menu;
     private javax.swing.JPanel Productos;
+    private javax.swing.JPanel ProductosIGU;
     private javax.swing.JPanel Proveedores;
     private javax.swing.JPanel Ventas;
+    public javax.swing.JButton btneliminar_emp;
+    public javax.swing.JButton btneliminar_productos;
+    public javax.swing.JButton btnguardar_emp;
+    public javax.swing.JButton btnguardar_productos;
+    public javax.swing.JButton btnmodificar_emp;
+    public javax.swing.JButton btnmodificar_productos;
     public javax.swing.JButton btnsalir;
+    public javax.swing.JComboBox<String> comboxtamanio;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton_Guardar1;
     private javax.swing.JButton jButton_Guardar2;
     private javax.swing.JButton jButton_Guardar4;
-    private javax.swing.JButton jButton_Guardar5;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox_cliente;
     private javax.swing.JComboBox<String> jComboBox_estado;
     private javax.swing.JLabel jLabel1;
@@ -1560,18 +1603,18 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
+    public javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
+    public javax.swing.JLabel jLabel28;
+    public javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
+    public javax.swing.JLabel jLabel30;
+    public javax.swing.JLabel jLabel31;
+    public javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
@@ -1584,11 +1627,12 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
-    private javax.swing.JLabel jLabel44;
-    private javax.swing.JLabel jLabel45;
+    public javax.swing.JLabel jLabel44;
+    public javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelClientes;
     private javax.swing.JLabel jLabelEmpleado;
@@ -1599,7 +1643,7 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelVentas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
+    public javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
@@ -1608,7 +1652,6 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1616,7 +1659,6 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1625,12 +1667,10 @@ public class Menu2 extends javax.swing.JFrame {
     public static javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbed_clientes;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
+    public javax.swing.JTable jTable_emp;
     public static javax.swing.JTable jTable_ventas;
-    public static javax.swing.JTable jTable_ventas1;
-    public javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
@@ -1640,22 +1680,25 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField2;
-    public javax.swing.JTextField jTextField20;
-    private javax.swing.JTextField jTextField21;
-    private javax.swing.JTextField jTextField22;
-    private javax.swing.JTextField jTextField23;
-    private javax.swing.JTextField jTextField24;
-    private javax.swing.JTextField jTextField25;
     private javax.swing.JTextField jTextField26;
-    private javax.swing.JTextField jTextField27;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    public javax.swing.JTable tabla_producto;
     private javax.swing.JTextField txt_fecha;
     private javax.swing.JTextField txt_total_pagar;
+    public javax.swing.JTextField txtapellido_emp;
+    public javax.swing.JTextField txtbuscar__producto;
+    public javax.swing.JTextField txtbuscar_emp;
+    public javax.swing.JTextField txtcedula_emp;
+    public javax.swing.JTextField txtcodigo;
+    public javax.swing.JTextField txtdescripcion;
+    public javax.swing.JTextField txtdireccion_emp;
+    public javax.swing.JTextField txtedad_emp;
+    public javax.swing.JTextField txtnombre_emp;
+    public javax.swing.JTextField txtnombre_producto;
+    public javax.swing.JTextField txtnombre_user;
+    public javax.swing.JPasswordField txtpassword;
+    public javax.swing.JTextField txtprecio;
     // End of variables declaration//GEN-END:variables
 }
