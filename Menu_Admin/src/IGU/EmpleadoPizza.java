@@ -4,6 +4,7 @@ import Models.Clientes;
 import Models.ClientesDAO;
 import Models.Productos;
 import Models.ProductosDAO;
+import Models.VentasDAO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -15,8 +16,12 @@ public class EmpleadoPizza extends javax.swing.JFrame {
     /**
      * Creates new form EmpleadoPizza
      */
-        double totalpagar = 0;
-        ArrayList<String> listadetalles = new ArrayList<>();
+    double totalpagar = 0;
+    ArrayList<String> listadetalles = new ArrayList<>();
+    ArrayList<Models.Ventas> listaProductos = new ArrayList<>();
+    int idclienteseleccionado = 0;
+    int id_empleado = 0;
+
     public EmpleadoPizza() {
         initComponents();
         setSize(1200, 650);
@@ -26,22 +31,32 @@ public class EmpleadoPizza extends javax.swing.JFrame {
         this.repaint();
         cargarcombobox();
     }
-    
-    private void cargarcombobox(){
+
+    private void cargarcombobox() {
         ProductosDAO producto = new ProductosDAO();
         ComboBoxpizza.removeAllItems();
         List<String> pizzas = producto.filtarcategoria("pizza");
-        for(String p : pizzas){
+        for (String p : pizzas) {
             ComboBoxpizza.addItem(p);
-        
+
         }
         ComboBoxbebida.removeAllItems();
         List<String> bebidas = producto.filtarcategoria("bebida");
-        for(String b : bebidas){
+        for (String b : bebidas) {
             ComboBoxbebida.addItem(b);
         }
-    
-    
+
+    }
+
+    private void cargarorden() {
+
+        generar_orden.setText("");
+
+        for (String items : listadetalles) {
+            generar_orden.append(items + "\n");
+
+        }
+
     }
 
     /**
@@ -62,14 +77,9 @@ public class EmpleadoPizza extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         ComboBoxpizza = new javax.swing.JComboBox<>();
         ComboBoxtamanio = new javax.swing.JComboBox<>();
         Spinnerpizza = new javax.swing.JSpinner();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
         btnagregarpizza = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -87,6 +97,9 @@ public class EmpleadoPizza extends javax.swing.JFrame {
         txtcedula = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         txtnombre = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        generar_orden = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -156,10 +169,6 @@ public class EmpleadoPizza extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Cantidad");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Extras");
-
         ComboBoxpizza.setBackground(new java.awt.Color(255, 255, 255));
         ComboBoxpizza.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         ComboBoxpizza.setForeground(new java.awt.Color(0, 0, 0));
@@ -170,25 +179,6 @@ public class EmpleadoPizza extends javax.swing.JFrame {
         ComboBoxtamanio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pequenia", "Mediana", "Grande" }));
 
         Spinnerpizza.setModel(new javax.swing.SpinnerNumberModel(0, 0, 20, 1));
-
-        jCheckBox1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jCheckBox1.setForeground(new java.awt.Color(0, 0, 0));
-        jCheckBox1.setText("Queso");
-
-        jCheckBox2.setBackground(new java.awt.Color(255, 255, 255));
-        jCheckBox2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jCheckBox2.setForeground(new java.awt.Color(0, 0, 0));
-        jCheckBox2.setText("Pepperoni");
-
-        jCheckBox3.setBackground(new java.awt.Color(255, 255, 255));
-        jCheckBox3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jCheckBox3.setForeground(new java.awt.Color(0, 0, 0));
-        jCheckBox3.setText("Hongos");
-
-        jCheckBox4.setBackground(new java.awt.Color(255, 255, 255));
-        jCheckBox4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jCheckBox4.setForeground(new java.awt.Color(0, 0, 0));
-        jCheckBox4.setText("Tocino");
 
         btnagregarpizza.setBackground(new java.awt.Color(39, 174, 96));
         btnagregarpizza.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -206,41 +196,23 @@ public class EmpleadoPizza extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Spinnerpizza, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ComboBoxpizza, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addComponent(jLabel1)
+                .addGap(37, 37, 37)
+                .addComponent(ComboBoxpizza, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox1)
-                            .addComponent(jCheckBox3))
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox2)
-                            .addComponent(jCheckBox4))
-                        .addGap(60, 60, 60))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(28, 28, 28)
-                        .addComponent(ComboBoxtamanio, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44))))
+                .addComponent(jLabel2)
+                .addGap(28, 28, 28)
+                .addComponent(ComboBoxtamanio, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44))
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(215, 215, 215)
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(Spinnerpizza, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(102, 102, 102)
                 .addComponent(btnagregarpizza, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(140, 140, 140))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,24 +223,19 @@ public class EmpleadoPizza extends javax.swing.JFrame {
                     .addComponent(ComboBoxpizza, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(ComboBoxtamanio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(75, 75, 75)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jLabel3)
-                    .addComponent(Spinnerpizza, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox3)
-                    .addComponent(jCheckBox4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(btnagregarpizza, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(Spinnerpizza, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(btnagregarpizza, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 600, 390));
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 600, 180));
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bebidas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14), new java.awt.Color(0, 0, 0))); // NOI18N
@@ -323,13 +290,13 @@ public class EmpleadoPizza extends javax.swing.JFrame {
                         .addGap(40, 40, 40)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ComboBoxtamaniob, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(Spinnerbebida, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnagregarbebida, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(181, 181, 181))
+                        .addComponent(ComboBoxtamaniob, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(85, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(Spinnerbebida, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnagregarbebida, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(95, 95, 95))))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -340,21 +307,20 @@ public class EmpleadoPizza extends javax.swing.JFrame {
                     .addComponent(ComboBoxbebida, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(ComboBoxtamaniob, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
+                .addGap(43, 43, 43)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(Spinnerbebida, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(btnagregarbebida, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                    .addComponent(Spinnerbebida, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnagregarbebida, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 220, 540, 230));
+        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 600, 190));
 
         txtbuscar.setBackground(new java.awt.Color(255, 255, 255));
         txtbuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtbuscar.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(txtbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 430, -1));
+        jPanel1.add(txtbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 340, -1));
 
         btnbuscar.setBackground(new java.awt.Color(39, 174, 96));
         btnbuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -366,7 +332,7 @@ public class EmpleadoPizza extends javax.swing.JFrame {
                 btnbuscarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, 120, 40));
+        jPanel1.add(btnbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, 120, 40));
 
         btnnuevo.setBackground(new java.awt.Color(39, 174, 96));
         btnnuevo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -378,7 +344,7 @@ public class EmpleadoPizza extends javax.swing.JFrame {
                 btnnuevoActionPerformed(evt);
             }
         });
-        jPanel1.add(btnnuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 130, 120, 40));
+        jPanel1.add(btnnuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 120, 120, 40));
 
         btnorden.setBackground(new java.awt.Color(216, 67, 21));
         btnorden.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -390,9 +356,9 @@ public class EmpleadoPizza extends javax.swing.JFrame {
                 btnordenActionPerformed(evt);
             }
         });
-        jPanel1.add(btnorden, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 530, 250, 50));
+        jPanel1.add(btnorden, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 560, 250, 50));
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Cedula:");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
@@ -403,7 +369,7 @@ public class EmpleadoPizza extends javax.swing.JFrame {
         txtcedula.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(txtcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 140, -1));
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Nombre:");
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, -1, -1));
@@ -414,53 +380,93 @@ public class EmpleadoPizza extends javax.swing.JFrame {
         txtnombre.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(txtnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 180, 300, -1));
 
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setForeground(new java.awt.Color(0, 0, 0));
+
+        generar_orden.setEditable(false);
+        generar_orden.setBackground(new java.awt.Color(255, 255, 255));
+        generar_orden.setColumns(20);
+        generar_orden.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        generar_orden.setForeground(new java.awt.Color(0, 0, 0));
+        generar_orden.setRows(5);
+        jScrollPane1.setViewportView(generar_orden);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 210, 320, 320));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Buscar Cliente:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 650));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnagregarbebidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarbebidaActionPerformed
-       String nombre = ComboBoxbebida.getSelectedItem().toString();
-       String tamanio = ComboBoxtamaniob.getSelectedItem().toString();
-       int cantidad = (int) Spinnerbebida.getValue();
-       
-       if(cantidad > 0){
+        String nombre = ComboBoxbebida.getSelectedItem().toString();
+        String tamanio = ComboBoxtamaniob.getSelectedItem().toString();
+        int cantidad = (int) Spinnerbebida.getValue();
+
+        if (cantidad > 0) {
            ProductosDAO producto = new ProductosDAO();
-           double precio = producto.obtenerPrecio(nombre, tamanio);
-           
-           if(precio > 0){
-               double subtotal = precio*cantidad;
-               totalpagar += subtotal;
-               listadetalles.add(cantidad + "  "+ nombre +"  "+ tamanio+"  $-"+subtotal);
-               JOptionPane.showMessageDialog(null, "bebida agregada. Total acumulado $-"+totalpagar);
-           
-           }
-           else {
-               JOptionPane.showMessageDialog(null, "error al obtener el precio");
-           }
-       
-       }
+            double precio = producto.obtenerPrecio(nombre, tamanio);
+
+            if (precio > 0) {
+               int codigo = producto.obtenerCodigo(nombre, tamanio);
+
+                Models.Ventas detalle = new Models.Ventas(
+                        codigo,
+                        cantidad,
+                        precio,
+                        nombre,
+                        nombre + " " + tamanio
+                );
+
+                listaProductos.add(detalle);
+                double subtotal = precio * cantidad;
+                totalpagar += subtotal;
+                listadetalles.add(cantidad + "  " + nombre + "  " + tamanio + "  $-" + subtotal);
+                cargarorden();
+                JOptionPane.showMessageDialog(null, "bebida agregada. Total acumulado $-" + totalpagar);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "error al obtener el precio");
+            }
+
+        }
     }//GEN-LAST:event_btnagregarbebidaActionPerformed
 
     private void btnagregarpizzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarpizzaActionPerformed
         String nombre = ComboBoxpizza.getSelectedItem().toString();
         String tamanio = ComboBoxtamanio.getSelectedItem().toString();
         int cantidad = (int) Spinnerpizza.getValue();
-        
-        if(cantidad > 0){
+
+        if (cantidad > 0) {
             ProductosDAO producto = new ProductosDAO();
             double precio = producto.obtenerPrecio(nombre, tamanio);
-            
-            if(precio > 0){
-                double subtotal = precio*cantidad;
+
+            if (precio > 0) {
+
+                int codigo = producto.obtenerCodigo(nombre, tamanio);
+
+                Models.Ventas detalle = new Models.Ventas(
+                        codigo,
+                        cantidad,
+                        precio,
+                        nombre,
+                        nombre + " " + tamanio
+                );
+                listaProductos.add(detalle);
+                double subtotal = precio * cantidad;
                 totalpagar += subtotal;
-                listadetalles.add(cantidad + "  "+ nombre +"  "+ tamanio+"  $-"+subtotal );
-                JOptionPane.showMessageDialog(null, "Pizza agregada. Total acumulado $-"+totalpagar);
-            
-            }
-            else{
+                listadetalles.add(cantidad + "  " + nombre + "  " + tamanio + "  $-" + subtotal);
+                cargarorden();
+                JOptionPane.showMessageDialog(null, "Pizza agregada. Total acumulado $-" + totalpagar);
+
+            } else {
                 JOptionPane.showMessageDialog(null, "Precio no encontrado");
-            
+
             }
         }
     }//GEN-LAST:event_btnagregarpizzaActionPerformed
@@ -475,13 +481,14 @@ public class EmpleadoPizza extends javax.swing.JFrame {
     }//GEN-LAST:event_btnsalirActionPerformed
 
     private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
-        String cedula = txtbuscar.getText();
+         String cedula = txtbuscar.getText();
 
         if (!"".equals(cedula)) {
             ClientesDAO dao = new ClientesDAO();
             Clientes cliente = dao.buscarcedula(cedula);
 
             if (cliente != null) {
+                idclienteseleccionado = cliente.getId_cliente();
                 txtcedula.setText(cliente.getCedula());
                 txtnombre.setText(cliente.getNombre() + "   " + cliente.getApellido());
 
@@ -489,36 +496,50 @@ public class EmpleadoPizza extends javax.swing.JFrame {
                 int respuesta = javax.swing.JOptionPane.showConfirmDialog(null,
                         "El cliente no existe. ¿Desea registrarlo?", "Cliente no encontrado",
                         javax.swing.JOptionPane.YES_NO_OPTION);
-                
-                if(respuesta == javax.swing.JOptionPane.YES_OPTION){
+
+                if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
                     NuevoUser nuevo = new NuevoUser();
                     nuevo.setVisible(true);
                 }
             }
-        
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese una cedula para buscar");
+
         }
-            else{
-                    JOptionPane.showMessageDialog(null, "Ingrese una cedula para buscar");
-                    
-         }
 
     }//GEN-LAST:event_btnbuscarActionPerformed
 
     private void btnnuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnuevoActionPerformed
-       NuevoUser clienteN = new NuevoUser();
-       clienteN.setVisible(true);
+        NuevoUser clienteN = new NuevoUser();
+        clienteN.setVisible(true);
     }//GEN-LAST:event_btnnuevoActionPerformed
 
     private void btnordenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnordenActionPerformed
-       if(totalpagar > 0 && !txtnombre.getText().isEmpty()){
-           String nombreC = txtnombre.getText();
-           Pago_Orden orden =new  Pago_Orden(totalpagar,nombreC,listadetalles);
-           orden.setVisible(true);
-       
-       }
-       else{
-           JOptionPane.showMessageDialog(null, "debe seleccionar un cliente y agregar productos");
-       }
+                if (totalpagar > 0 && idclienteseleccionado > 0 && !listaProductos.isEmpty()) {
+
+            VentasDAO ventas = new VentasDAO();
+            int id_venta = ventas.registrarventa(idclienteseleccionado, id_empleado);
+
+            if (id_venta > 0) {
+                for (Models.Ventas v : listaProductos) {
+                    ventas.registrardetallefactura(id_venta, v.getCodigo(), v.getCantidad(), v.getPreciounitario());
+
+                }
+
+                Pago_Orden orden = new Pago_Orden(totalpagar, txtnombre.getText(), listadetalles);
+                orden.setVisible(true);
+
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "error al guardar la venta");
+            
+            }
+
+            //String nombreC = txtnombre.getText();
+        } else {
+            JOptionPane.showMessageDialog(null, "debe seleccionar un cliente y agregar productos");
+        }
     }//GEN-LAST:event_btnordenActionPerformed
 
     /**
@@ -559,10 +580,7 @@ public class EmpleadoPizza extends javax.swing.JFrame {
     public javax.swing.JButton btnnuevo;
     public javax.swing.JButton btnorden;
     private javax.swing.JButton btnsalir;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JTextArea generar_orden;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -578,6 +596,7 @@ public class EmpleadoPizza extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTextField txtbuscar;
     public javax.swing.JTextField txtcedula;
     public javax.swing.JTextField txtnombre;

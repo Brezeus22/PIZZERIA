@@ -8,8 +8,10 @@ public class Empleados {
     private int edad;
     private String direccion;
     private int id_usuario;
+    private String nombre_user;
+    private String password;
 
-    public Empleados(int id_emp, String cedula, String nombre, String apellido, int edad, String direccion, int id_usuario) {
+    public Empleados(int id_emp, String cedula, String nombre, String apellido, int edad, String direccion, int id_usuario, String nombre_user, String password) {
         this.id_emp = id_emp;
         this.cedula = cedula;
         this.nombre = nombre;
@@ -17,6 +19,25 @@ public class Empleados {
         this.edad = edad;
         this.direccion = direccion;
         this.id_usuario = id_usuario;
+        this.nombre_user = nombre_user;
+        this.password = password;
+        
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getNombre_user() {
+        return nombre_user;
+    }
+
+    public void setNombre_user(String nombre_user) {
+        this.nombre_user = nombre_user;
     }
 
     public Empleados() {

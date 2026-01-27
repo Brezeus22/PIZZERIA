@@ -177,6 +177,28 @@ public class ProductosDAO {
         }
 
     }
+    
+    // metodo para obtener el codigo del producto
+        public int obtenerCodigo(String nombre, String tamanio) {
+        int codigo = 0;
+        String sql = "SELECT codigo FROM productos WHERE nombre = ? AND tamanio = ?";
+
+        try {
+            con = Conexion_MySQL.ConexionSQL.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, nombre);
+            ps.setString(2, tamanio);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                codigo = rs.getInt("codigo");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener el codigo del producto: " + e.getMessage());
+        }
+        return codigo;
+    }
+
 
     // metodo para contar productos
     public int contarProductos() {
