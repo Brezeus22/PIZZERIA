@@ -14,7 +14,7 @@ public class ClientesDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    // metodo para leer todos los clientes 
+    // metodo para leer todos los clientes
     public List<Clientes> obtenertodoslosclientes() {
         List<Clientes> clientes = new ArrayList<>();
         String sql = "SELECT* FROM clientes";
@@ -69,7 +69,7 @@ public class ClientesDAO {
         return cliente;
     }
 
-    //metodo para buscar por cedula
+    // metodo para buscar por cedula
     public Clientes buscarcedula(String cedula) {
         String sql = "SELECT* FROM clientes WHERE cedula = ?";
         Clientes cliente = null;
@@ -90,7 +90,7 @@ public class ClientesDAO {
 
             }
         } catch (SQLException e) {
-            System.err.println("Error al buscar al cliente: "+e.getMessage());
+            System.err.println("Error al buscar al cliente: " + e.getMessage());
         }
         return cliente;
 
@@ -118,7 +118,7 @@ public class ClientesDAO {
 
     }
 
-    // metodo para modificar un cliente 
+    // metodo para modificar un cliente
     public boolean modificarcliente(Clientes cliente) {
         String sql = "UPDATE clientes SET cedula = ?, nombre = ?, apellido = ?, telefono = ?, direccion = ? WHERE id_cliente = ?";
 
@@ -139,7 +139,22 @@ public class ClientesDAO {
             System.err.println("Error al modificar al cliente: " + e.getMessage());
             return false;
         }
+    }
 
+    public boolean existeCedula(String cedula) {
+        String sql = "SELECT COUNT(*) FROM clientes WHERE cedula = ?";
+        try {
+            con = ConexionSQL.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, cedula);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al verificar cédula: " + e.getMessage());
+        }
+        return false;
     }
 
     // metodo para eliminar un cliente
@@ -158,5 +173,21 @@ public class ClientesDAO {
             return false;
         }
 
+    }
+
+    // metodo para contar clientes
+    public int contarClientes() {
+        String sql = "SELECT COUNT(*) FROM clientes";
+        try {
+            con = ConexionSQL.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al contar clientes: " + e.getMessage());
+        }
+        return 0;
     }
 }

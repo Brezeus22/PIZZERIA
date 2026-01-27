@@ -111,7 +111,7 @@ public class ProveedoresDAO {
 
     }
 
-    //metodo para eliminar proveedores
+    // metodo para eliminar proveedores
     public boolean eliminarproveedor(int id_proveedor) {
         String sql = "DELETE FROM proveedores WHERE id_proveedor = ?";
         try {
@@ -124,5 +124,21 @@ public class ProveedoresDAO {
             System.err.println("Error al eliminar el proveedor" + e.getMessage());
             return false;
         }
+    }
+
+    // metodo para contar proveedores
+    public int contarProveedores() {
+        String sql = "SELECT COUNT(*) FROM proveedores";
+        try {
+            con = ConexionSQL.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al contar proveedores: " + e.getMessage());
+        }
+        return 0;
     }
 }

@@ -43,7 +43,7 @@ public class EmpleadosDAO {
 
     }
 
-    //metodo para leer un unico empleado
+    // metodo para leer un unico empleado
     public Empleados mostrarempleado(int id_emp) {
         Empleados empleado = new Empleados();
         String sql = "SELECT* FROM empleados WHERE id_emp = ?";
@@ -67,7 +67,7 @@ public class EmpleadosDAO {
         return empleado;
     }
 
-    //metodo para registrar un empleado
+    // metodo para registrar un empleado
     public boolean registrarempleado(Empleados empleado) {
         String sql = "INSERT INTO empleados(cedula, nombre, apellido, edad, direccion, id_usuario) VALUES(?,?,?,?,?,?)";
 
@@ -89,7 +89,7 @@ public class EmpleadosDAO {
 
     }
 
-    //metodo para modificar un empleado 
+    // metodo para modificar un empleado
     public boolean modificarempleado(Empleados empleado) {
         String sql = "UPDATE empleados SET cedula = ?, nombre = ?, apellido = ?, edad = ?, direccion = ? WHERE id_emp =?";
 
@@ -106,16 +106,16 @@ public class EmpleadosDAO {
             return true;
 
         } catch (SQLException e) {
-            System.err.println("Error al modificar al empleado: "+e.getMessage());
+            System.err.println("Error al modificar al empleado: " + e.getMessage());
             return false;
         }
 
     }
-    
-    //metodo para eliminar un empleado
-    public boolean eliminarempleado(int id_emp){
+
+    // metodo para eliminar un empleado
+    public boolean eliminarempleado(int id_emp) {
         String sql = "DELETE FROM empleados WHERE id_emp = ?";
-        
+
         try {
             con = ConexionSQL.getConnection();
             ps = con.prepareStatement(sql);
@@ -123,9 +123,42 @@ public class EmpleadosDAO {
             ps.execute();
             return true;
         } catch (SQLException e) {
-            System.err.println("Error al eliminar al empleado: "+e.getMessage());
+            System.err.println("Error al eliminar al empleado: " + e.getMessage());
             return false;
         }
-    
+
+    }
+
+    // metodo para verificar si existe cedula
+    public boolean existeCedula(String cedula) {
+        String sql = "SELECT COUNT(*) FROM empleados WHERE cedula = ?";
+        try {
+            con = ConexionSQL.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, cedula);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al verificar cédula: " + e.getMessage());
+        }
+        return false;
+    }
+
+    // metodo para contar empleados
+    public int contarEmpleados() {
+        String sql = "SELECT COUNT(*) FROM empleados";
+        try {
+            con = ConexionSQL.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al contar empleados: " + e.getMessage());
+        }
+        return 0;
     }
 }

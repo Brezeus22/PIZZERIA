@@ -14,7 +14,7 @@ public class ProductosDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    //metodo para leer todos los productos
+    // metodo para leer todos los productos
     public List<Productos> obtenerproductos() {
         List<Productos> productos = new ArrayList();
 
@@ -51,20 +51,20 @@ public class ProductosDAO {
             ps.setString(1, categoria);
             rs = ps.executeQuery();
             while (rs.next()) {
-//                Productos objP = new Productos();
-//
-//                objP.setNombre(rs.getString("nombre"));
-//                objP.setTamanio(rs.getString("tamanio"));
-//                objP.setPrecio(rs.getDouble("precio"));
+                // Productos objP = new Productos();
+                //
+                // objP.setNombre(rs.getString("nombre"));
+                // objP.setTamanio(rs.getString("tamanio"));
+                // objP.setPrecio(rs.getDouble("precio"));
                 producto.add(rs.getString("nombre"));
             }
         } catch (SQLException e) {
-            System.err.println("Error filtrando productos: "+e.getMessage());
+            System.err.println("Error filtrando productos: " + e.getMessage());
         }
         return producto;
     }
-    
-    //metodo para obtener el precio
+
+    // metodo para obtener el precio
     public double obtenerPrecio(String nombre, String tamanio) {
         double precio = 0.0;
         String sql = "SELECT precio FROM productos WHERE nombre = ? AND tamanio = ?";
@@ -78,12 +78,12 @@ public class ProductosDAO {
                 precio = rs.getDouble("precio");
             }
         } catch (SQLException e) {
-            System.err.println("error al obtener el precio del producto"+e.getMessage());
+            System.err.println("error al obtener el precio del producto" + e.getMessage());
         }
         return precio;
     }
 
-    //metodo para leer un unico producto
+    // metodo para leer un unico producto
     public List<Productos> buscarproducto(String valor) {
         List<Productos> productos = new ArrayList<>();
         Productos producto = null;
@@ -92,13 +92,13 @@ public class ProductosDAO {
         try {
             con = ConexionSQL.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setString(1,"%" + valor + "%" );
+            ps.setString(1, "%" + valor + "%");
             ps.setString(2, "%" + valor + "%");
             ps.setString(3, "%" + valor + "%");
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                producto = new  Productos();
+                producto = new Productos();
                 producto.setCodigo(rs.getInt("codigo"));
                 producto.setNombre(rs.getString("nombre"));
                 producto.setDescripcion(rs.getString("descripcion"));
@@ -115,7 +115,7 @@ public class ProductosDAO {
 
     }
 
-    //metodo para registrar un producto
+    // metodo para registrar un producto
     public boolean registrarproducto(Productos producto) {
         String sql = "INSERT INTO productos(nombre, descripcion, categoria, tamanio, precio) VALUES(?,?,?,?,?)";
 
@@ -138,7 +138,7 @@ public class ProductosDAO {
 
     }
 
-    //metodo para modificar un producto
+    // metodo para modificar un producto
     public boolean modificarproducto(Productos producto) {
         String sql = "UPDATE productos SET nombre = ?, descripcion =?, categoria = ?, tamanio = ?, precio = ? WHERE codigo = ?";
 
@@ -161,7 +161,7 @@ public class ProductosDAO {
         }
     }
 
-    //metodo para eliminar un producto
+    // metodo para eliminar un producto
     public boolean eliminarproducto(int codigo) {
         String sql = "DELETE FROM productos WHERE codigo = ?";
 
@@ -178,4 +178,19 @@ public class ProductosDAO {
 
     }
 
+    // metodo para contar productos
+    public int contarProductos() {
+        String sql = "SELECT COUNT(*) FROM productos";
+        try {
+            con = ConexionSQL.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al contar productos: " + e.getMessage());
+        }
+        return 0;
+    }
 }
