@@ -87,7 +87,7 @@ public class LoginInicio extends javax.swing.JFrame {
         jPanel1.add(Right);
         Right.setBounds(0, 0, 390, 500);
 
-        Left.setBackground(new java.awt.Color(204, 0, 51));
+        Left.setBackground(new java.awt.Color(230, 126, 34));
         Left.setMinimumSize(new java.awt.Dimension(100, 100));
         Left.setPreferredSize(new java.awt.Dimension(400, 500));
 
@@ -98,9 +98,8 @@ public class LoginInicio extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Email *");
+        jLabel2.setText("Usuario *");
 
-        txtemail.setBackground(new java.awt.Color(255, 255, 255));
         txtemail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtemailActionPerformed(evt);
@@ -109,13 +108,10 @@ public class LoginInicio extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Password *");
-
-        txtpassword.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Contraseña*");
 
         jButton1.setBackground(new java.awt.Color(204, 255, 204));
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("Entrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
