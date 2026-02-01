@@ -4,14 +4,21 @@
  */
 package IGU;
 
+import Models.VentasDAO;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import Models.Clientes;
+import Models.ClientesDAO;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
  * @author admin
  */
 public class Pago_Orden extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Pago_Orden.class.getName());
 
     /**
@@ -20,41 +27,52 @@ public class Pago_Orden extends javax.swing.JFrame {
     private double montototal;
     private String nombrecliente;
     private List<String> detalles;
+
+    private ArrayList<Models.Ventas> listaProductos;
+    private int idCliente;
+    private int idEmpleado;
+    private EmpleadoPizza empleadoPizza;
+    private double iva;
+
     public Pago_Orden() {
+        initComponents();
+
+    }
+
+    public Pago_Orden(double montototal, String cliente, List<String> items, ArrayList<Models.Ventas> productos, int idCli, int idEmp,
+            EmpleadoPizza parent) {
         initComponents();
         setResizable(false);
         setTitle("Pago de la orden");
         setLocationRelativeTo(null);
         this.repaint();
-    }
-    
-    
-    public Pago_Orden(double total, String cliente, List<String> items){
-        initComponents();
-        this.montototal = total;
+        this.montototal = montototal;
         this.nombrecliente = cliente;
         this.detalles = items;
-        
-        txtsubtotal.setText("$"+total);
-        double iva = total*0.06;
-        txtiva.setText("$"+ String.format("%.2f",iva));
-        txttotal.setText("$"+String.format("%.2f",(total + iva)));
-        
+        this.listaProductos = productos;
+        this.idCliente = idCli;
+        this.idEmpleado = idEmp;
+        this.empleadoPizza = parent;
+
+        txtsubtotal.setText("Bs" + this.montototal);
+        iva = this.montototal * 0.06;
+        txtiva.setText("Bs" + String.format("%.2f", iva));
+        txttotal.setText("Bs" + String.format("%.2f", (montototal + iva)));
+
         cargarticket();
-        
+
     }
-    
-    private void cargarticket(){
-        
+
+    private void cargarticket() {
+
         ticket.setText("");
-        ticket.append("Cantidad | Producto | Precio\n");
-        
-        for(String items : detalles){
+        ticket.append("\n");
+
+        for (String items : detalles) {
             ticket.append(items + "\n");
-        
-        
+
         }
-    
+
     }
 
     /**
@@ -72,11 +90,11 @@ public class Pago_Orden extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         txtsubtotal = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btn_pagar = new javax.swing.JButton();
         txtiva = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         txttotal = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
+        btn_cancelarP = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         ticket = new javax.swing.JTextArea();
 
@@ -104,10 +122,16 @@ public class Pago_Orden extends javax.swing.JFrame {
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("IVA(6%)");
 
-        jButton1.setBackground(new java.awt.Color(216, 67, 21));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Pagar");
-        jButton1.setPreferredSize(new java.awt.Dimension(50, 30));
+        btn_pagar.setBackground(new java.awt.Color(216, 67, 21));
+        btn_pagar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_pagar.setForeground(new java.awt.Color(255, 255, 255));
+        btn_pagar.setText("Pagar");
+        btn_pagar.setPreferredSize(new java.awt.Dimension(50, 30));
+        btn_pagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_pagarActionPerformed(evt);
+            }
+        });
 
         txtiva.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtiva.setForeground(new java.awt.Color(0, 0, 0));
@@ -121,9 +145,14 @@ public class Pago_Orden extends javax.swing.JFrame {
         txttotal.setForeground(new java.awt.Color(216, 67, 21));
         txttotal.setText("$59");
 
-        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel20.setText("Metodo de Pago:");
+        btn_cancelarP.setBackground(new java.awt.Color(216, 67, 21));
+        btn_cancelarP.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_cancelarP.setText("Cancelar");
+        btn_cancelarP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelarPActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -131,29 +160,24 @@ public class Pago_Orden extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel20)
-                        .addContainerGap(253, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel14)
-                                    .addComponent(jLabel16))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtiva)
-                                    .addComponent(txtsubtotal)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel18)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txttotal))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                                .addGap(79, 79, 79)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(15, 15, 15))))
+                        .addComponent(btn_cancelarP, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                        .addComponent(btn_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel16))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtiva)
+                            .addComponent(txtsubtotal)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txttotal)))
+                .addGap(15, 15, 15))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,10 +194,10 @@ public class Pago_Orden extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txttotal)
                     .addComponent(jLabel18))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(jLabel20)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_cancelarP, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10))
         );
 
@@ -221,6 +245,88 @@ public class Pago_Orden extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_cancelarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarPActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btn_cancelarPActionPerformed
+
+    private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
+        VentasDAO ventasDAO = new VentasDAO();
+        ClientesDAO clientesDAO = new ClientesDAO();
+        
+
+        int id_venta = ventasDAO.registrarventa(idCliente, idEmpleado);
+
+        if (id_venta > 0) {
+            boolean error = false;
+            boolean detalles = true;
+
+            for (Models.Ventas v : listaProductos) {
+                 iva = this.montototal * 0.06;
+                double total = v.getPreciounitario() * v.getCantidad() + iva;
+               
+
+                boolean registrado = ventasDAO.registrardetallefactura(id_venta, v.getCodigo(), v.getCantidad(), total);
+
+                if (!registrado) {
+                    error = true;
+                    detalles = false;
+                }
+
+            }
+            
+                if(detalles){
+                Clientes datosCliente = clientesDAO.obtenerCliente(idCliente);
+                String nombreCompleto = (datosCliente != null) ? datosCliente.getNombre() + " " + datosCliente.getApellido() : nombrecliente;
+                String cedulaCliente = (datosCliente != null) ? datosCliente.getCedula() : "N/A";
+                 double totalFinal = montototal + iva;
+                
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                String fechaActual = sdf.format(new Date());
+                
+                StringBuilder factura = new StringBuilder();
+                factura.append("================================\n");
+                factura.append("         GUAROS PIZZAS          \n");
+                factura.append("================================\n");
+                factura.append("Fecha:   ").append(fechaActual).append("\n");
+                factura.append("Cliente: ").append(nombreCompleto).append("\n");
+                factura.append("Cédula:  ").append(cedulaCliente).append("\n");
+                factura.append("--------------------------------\n");
+                factura.append("PRODUCTOS COMPRADOS:\n");
+                
+                for (Models.Ventas prod : listaProductos) {
+                    factura.append("- ").append(prod.getNombre())
+                           .append(" (x").append(prod.getCantidad()).append(")\n");
+                }
+                
+                factura.append("--------------------------------\n");
+                factura.append("Subtotal:  ").append(txtsubtotal.getText()).append(" Bs\n"); 
+                factura.append("IVA (6%): ").append(txtiva.getText()).append(" Bs\n");
+                factura.append("TOTAL:     ").append(String.format("%.2f", totalFinal)).append("Bs\n");
+                factura.append("================================\n");
+                factura.append("    ¡Gracias por su compra!     \n");
+                
+                JOptionPane.showMessageDialog(this, factura.toString(), "Factura de Compra", JOptionPane.INFORMATION_MESSAGE);
+                
+                   if (!error) {
+
+                empleadoPizza.limpiarTodo();
+                this.dispose();
+
+            } 
+            
+            }else {
+                JOptionPane.showMessageDialog(this, "Error al guardar algunos detalles de la factura.");
+
+            }
+            
+        
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al registrar la venta en base de datos.");
+
+        }
+    }//GEN-LAST:event_btn_pagarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -247,12 +353,12 @@ public class Pago_Orden extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    public javax.swing.JButton btn_cancelarP;
+    public javax.swing.JButton btn_pagar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;

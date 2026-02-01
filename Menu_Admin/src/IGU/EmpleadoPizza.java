@@ -24,12 +24,19 @@ public class EmpleadoPizza extends javax.swing.JFrame {
 
     public EmpleadoPizza() {
         initComponents();
+
+    }
+
+    public EmpleadoPizza(int id_emp) {
+        this.id_empleado = id_emp;
+        initComponents();
         setSize(1200, 650);
         setResizable(false);
         setTitle("Panel de Empleado");
         setLocationRelativeTo(null);
         this.repaint();
         cargarcombobox();
+
     }
 
     private void cargarcombobox() {
@@ -57,6 +64,27 @@ public class EmpleadoPizza extends javax.swing.JFrame {
 
         }
 
+    }
+
+    public void limpiarTodo() {
+        listadetalles.clear();
+        listaProductos.clear();
+        totalpagar = 0;
+        idclienteseleccionado = 0;
+
+        txtcedula.setText("");
+        txtnombre.setText("");
+        txtbuscar.setText("");
+        generar_orden.setText("");
+
+        // Reiniciar spinners
+        Spinnerpizza.setValue(0);
+        Spinnerbebida.setValue(0);
+    }
+
+    public void setEmpleadoId(int id) {
+        this.id_empleado = id;
+        System.out.println("ID de empleado asignado al panel: " + id); // Para verificar en consola
     }
 
     /**
@@ -100,6 +128,7 @@ public class EmpleadoPizza extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         generar_orden = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
+        btn_cancelarO = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -356,7 +385,7 @@ public class EmpleadoPizza extends javax.swing.JFrame {
                 btnordenActionPerformed(evt);
             }
         });
-        jPanel1.add(btnorden, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 560, 250, 50));
+        jPanel1.add(btnorden, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 560, 190, 50));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
@@ -398,6 +427,16 @@ public class EmpleadoPizza extends javax.swing.JFrame {
         jLabel4.setText("Buscar Cliente:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
 
+        btn_cancelarO.setBackground(new java.awt.Color(216, 67, 21));
+        btn_cancelarO.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_cancelarO.setText("Cancelar");
+        btn_cancelarO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelarOActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_cancelarO, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 560, 190, 50));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 650));
 
         pack();
@@ -409,11 +448,11 @@ public class EmpleadoPizza extends javax.swing.JFrame {
         int cantidad = (int) Spinnerbebida.getValue();
 
         if (cantidad > 0) {
-           ProductosDAO producto = new ProductosDAO();
+            ProductosDAO producto = new ProductosDAO();
             double precio = producto.obtenerPrecio(nombre, tamanio);
 
             if (precio > 0) {
-               int codigo = producto.obtenerCodigo(nombre, tamanio);
+                int codigo = producto.obtenerCodigo(nombre, tamanio);
 
                 Models.Ventas detalle = new Models.Ventas(
                         codigo,
@@ -426,9 +465,9 @@ public class EmpleadoPizza extends javax.swing.JFrame {
                 listaProductos.add(detalle);
                 double subtotal = precio * cantidad;
                 totalpagar += subtotal;
-                listadetalles.add(cantidad + "  " + nombre + "  " + tamanio + "  $-" + subtotal);
+                listadetalles.add(cantidad + "  " + nombre + "  " + tamanio + "  Bs-" + subtotal);
                 cargarorden();
-                JOptionPane.showMessageDialog(null, "bebida agregada. Total acumulado $-" + totalpagar);
+                JOptionPane.showMessageDialog(null, "bebida agregada. Total acumulado Bs-" + totalpagar);
 
             } else {
                 JOptionPane.showMessageDialog(null, "error al obtener el precio");
@@ -460,9 +499,9 @@ public class EmpleadoPizza extends javax.swing.JFrame {
                 listaProductos.add(detalle);
                 double subtotal = precio * cantidad;
                 totalpagar += subtotal;
-                listadetalles.add(cantidad + "  " + nombre + "  " + tamanio + "  $-" + subtotal);
+                listadetalles.add(cantidad + "  " + nombre + "  " + tamanio + "  Bs-" + subtotal);
                 cargarorden();
-                JOptionPane.showMessageDialog(null, "Pizza agregada. Total acumulado $-" + totalpagar);
+                JOptionPane.showMessageDialog(null, "Pizza agregada. Total acumulado Bs-" + totalpagar);
 
             } else {
                 JOptionPane.showMessageDialog(null, "Precio no encontrado");
@@ -481,7 +520,7 @@ public class EmpleadoPizza extends javax.swing.JFrame {
     }//GEN-LAST:event_btnsalirActionPerformed
 
     private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
-         String cedula = txtbuscar.getText();
+        String cedula = txtbuscar.getText();
 
         if (!"".equals(cedula)) {
             ClientesDAO dao = new ClientesDAO();
@@ -516,31 +555,34 @@ public class EmpleadoPizza extends javax.swing.JFrame {
     }//GEN-LAST:event_btnnuevoActionPerformed
 
     private void btnordenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnordenActionPerformed
-                if (totalpagar > 0 && idclienteseleccionado > 0 && !listaProductos.isEmpty()) {
+        if (totalpagar > 0 && idclienteseleccionado > 0 && !listaProductos.isEmpty()) {
+            Pago_Orden orden = new Pago_Orden(
+                    totalpagar,
+                    txtnombre.getText(),
+                    listadetalles,
+                    listaProductos,
+                    idclienteseleccionado,
+                    id_empleado,
+                    this);
 
-            VentasDAO ventas = new VentasDAO();
-            int id_venta = ventas.registrarventa(idclienteseleccionado, id_empleado);
+            orden.setVisible(true);
 
-            if (id_venta > 0) {
-                for (Models.Ventas v : listaProductos) {
-                    ventas.registrardetallefactura(id_venta, v.getCodigo(), v.getCantidad(), v.getPreciounitario());
-
-                }
-
-                Pago_Orden orden = new Pago_Orden(totalpagar, txtnombre.getText(), listadetalles);
-                orden.setVisible(true);
-
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "error al guardar la venta");
-            
-            }
-
-            //String nombreC = txtnombre.getText();
         } else {
-            JOptionPane.showMessageDialog(null, "debe seleccionar un cliente y agregar productos");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente y agregar productos para procesar la orden.");
+
         }
+
+
     }//GEN-LAST:event_btnordenActionPerformed
+
+    private void btn_cancelarOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarOActionPerformed
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de cancelar la orden actual? Se perderán los productos agregados.", "Cancelar Orden",
+                JOptionPane.YES_NO_OPTION);
+
+        if (respuesta == JOptionPane.YES_OPTION) {
+            limpiarTodo();
+        }
+    }//GEN-LAST:event_btn_cancelarOActionPerformed
 
     /**
      * @param args the command line arguments
@@ -574,6 +616,7 @@ public class EmpleadoPizza extends javax.swing.JFrame {
     public javax.swing.JComboBox<String> ComboBoxtamaniob;
     public javax.swing.JSpinner Spinnerbebida;
     public javax.swing.JSpinner Spinnerpizza;
+    public javax.swing.JButton btn_cancelarO;
     public javax.swing.JButton btnagregarbebida;
     public javax.swing.JButton btnagregarpizza;
     public javax.swing.JButton btnbuscar;

@@ -47,7 +47,7 @@ public class LoginInicio extends javax.swing.JFrame {
         txtemail = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtpassword = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        btn_login = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,12 +110,12 @@ public class LoginInicio extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Contraseña*");
 
-        jButton1.setBackground(new java.awt.Color(204, 255, 204));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setText("Entrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_login.setBackground(new java.awt.Color(204, 255, 204));
+        btn_login.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btn_login.setText("Entrar");
+        btn_login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_loginActionPerformed(evt);
             }
         });
 
@@ -130,7 +130,7 @@ public class LoginInicio extends javax.swing.JFrame {
                     .addComponent(txtemail, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
                     .addComponent(jLabel3)
                     .addComponent(txtpassword)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftLayout.createSequentialGroup()
                 .addContainerGap(136, Short.MAX_VALUE)
@@ -151,7 +151,7 @@ public class LoginInicio extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(126, Short.MAX_VALUE))
         );
 
@@ -178,8 +178,8 @@ public class LoginInicio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtemailActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+    private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
+
         String nombre_user = txtemail.getText();
         String password = String.valueOf(txtpassword.getPassword());
         
@@ -200,7 +200,7 @@ public class LoginInicio extends javax.swing.JFrame {
                 
                 }
                 else if (usuariologin.getRol().equalsIgnoreCase("empleado")){
-                    EmpleadoPizza empleado = new EmpleadoPizza();
+                    EmpleadoPizza empleado = new EmpleadoPizza(usuariologin.getId_emp());
                     empleado.setVisible(true);
                 }
                 
@@ -212,7 +212,7 @@ public class LoginInicio extends javax.swing.JFrame {
         }
         
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_loginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,7 +221,7 @@ public class LoginInicio extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Left;
     private javax.swing.JPanel Right;
-    private javax.swing.JButton jButton1;
+    public javax.swing.JButton btn_login;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

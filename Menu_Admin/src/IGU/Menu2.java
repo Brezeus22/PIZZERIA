@@ -16,6 +16,7 @@ import Models.VentasDAO;
 import controladores.ClientesController;
 import controladores.EmpleadosController;
 import controladores.ProductosControllers;
+import controladores.VentasController;
 
 /**
  *
@@ -68,12 +69,16 @@ public class Menu2 extends javax.swing.JFrame {
         ClientesController clientescontroller = new ClientesController(clientes, clientesdao, this);
         clientescontroller.inicializartabla();
         clientescontroller.cargartabla();
-        EmpleadosController empleadosController = new EmpleadosController(usuario, usuariodao, empleados,
-                empleadosdao,
-                this);
+        EmpleadosController empleadosController = new EmpleadosController(usuario, usuariodao, empleados,empleadosdao, this);
         empleadosController.inicializartabla_empleado();
         empleadosController.cargartabla_empleado();
+        VentasController ventasController = new VentasController(ventasdao, clientesdao, this);
+        ventasController.iniciar();
     }
+    
+    public javax.swing.JTextField getTxtTotalPagar() {
+    return txt_total_pagar;
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -486,7 +491,9 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel24.setText("Total Pagar:");
         jPanel14.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, -1));
 
-        txt_total_pagar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_total_pagar.setEditable(false);
+        txt_total_pagar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txt_total_pagar.setForeground(new java.awt.Color(51, 204, 0));
         txt_total_pagar.setEnabled(false);
         jPanel14.add(txt_total_pagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 170, -1));
 
@@ -505,12 +512,13 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel27.setText("Estado:");
         jPanel14.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 90, -1));
 
-        txt_fecha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_fecha.setEditable(false);
+        txt_fecha.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txt_fecha.setForeground(new java.awt.Color(51, 204, 0));
         txt_fecha.setEnabled(false);
         jPanel14.add(txt_fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 170, -1));
 
-        jComboBox_cliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox_cliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione cliente:", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_cliente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jPanel14.add(jComboBox_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 170, -1));
 
         jComboBox_estado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -1332,7 +1340,7 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JButton jButton_PRODUCTOS;
     private javax.swing.JButton jButton_VENTAS;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox_cliente;
+    public javax.swing.JComboBox<String> jComboBox_cliente;
     private javax.swing.JComboBox<String> jComboBox_estado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
@@ -1394,12 +1402,12 @@ public class Menu2 extends javax.swing.JFrame {
     public static javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTable jTable1;
     public javax.swing.JTable jTable_emp;
-    public static javax.swing.JTable jTable_ventas;
+    public javax.swing.JTable jTable_ventas;
     public javax.swing.JTabbedPane panel_admin;
     public javax.swing.JTable tabla_producto;
     public javax.swing.JTable table_cliente;
-    private javax.swing.JTextField txt_fecha;
-    private javax.swing.JTextField txt_total_pagar;
+    public javax.swing.JTextField txt_fecha;
+    public javax.swing.JTextField txt_total_pagar;
     public javax.swing.JTextField txtapellido_clliente;
     public javax.swing.JTextField txtapellido_emp;
     public javax.swing.JTextField txtbuscar__producto;

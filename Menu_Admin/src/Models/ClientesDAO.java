@@ -54,6 +54,7 @@ public class ClientesDAO {
             rs = ps.executeQuery();
 
             if (rs.next()) {
+                cliente = new Clientes();
                 cliente.setId_cliente(rs.getInt("id_cliente"));
                 cliente.setCedula(rs.getString("cedula"));
                 cliente.setNombre(rs.getString("nombre"));

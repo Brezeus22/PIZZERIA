@@ -215,8 +215,7 @@ public class ClientesController implements ActionListener, MouseListener, KeyLis
     @Override
     public void keyTyped(KeyEvent e) {
         char c = e.getKeyChar();
-        if (e.getSource() == admin.txtnom_cliente || e.getSource() == admin.txtapellido_clliente
-                || e.getSource() == admin.txtdireccion_cliente) {
+        if (e.getSource() == admin.txtnom_cliente || e.getSource() == admin.txtapellido_clliente) {
             if (Character.isDigit(c)) {
                 e.consume();
                 java.awt.Toolkit.getDefaultToolkit().beep();

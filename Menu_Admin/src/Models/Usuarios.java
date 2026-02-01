@@ -5,15 +5,25 @@ public class Usuarios {
     private String rol;
     private String nombre_user;
     private String password;
+    private int id_emp;
 
     public Usuarios() {
     }
 
-    public Usuarios(int id_usuario, String rol, String nombre_user, String password) {
+    public Usuarios(int id_usuario, String rol, String nombre_user, String password, int id_emp) {
         this.id_usuario = id_usuario;
         this.rol = rol;
         this.nombre_user = nombre_user;
         this.password = password;
+        this.id_emp = id_emp;
+    }
+
+    public int getId_emp() {
+        return id_emp;
+    }
+
+    public void setId_emp(int id_emp) {
+        this.id_emp = id_emp;
     }
 
     public int getId_usuario() {
