@@ -192,7 +192,7 @@ public class LoginInicio extends javax.swing.JFrame {
             Usuarios usuariologin = dao.login(nombre_user, password);
             
             if(usuariologin != null){
-                JOptionPane.showMessageDialog(null, "Bienvenido al sistema");
+                JOptionPane.showMessageDialog(null, "Bienvenido al sistema ");
                 
                 if(usuariologin.getRol().equalsIgnoreCase("administrador")){
                     Menu2 admin = new Menu2();

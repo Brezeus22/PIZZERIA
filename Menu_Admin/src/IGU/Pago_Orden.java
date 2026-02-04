@@ -55,9 +55,10 @@ public class Pago_Orden extends javax.swing.JFrame {
         this.empleadoPizza = parent;
 
         txtsubtotal.setText("Bs" + this.montototal);
-        iva = this.montototal * 0.06;
-        txtiva.setText("Bs" + String.format("%.2f", iva));
-        txttotal.setText("Bs" + String.format("%.2f", (montototal + iva)));
+        double mon = montototal;
+        double ivita = mon* 0.06;
+        txtiva.setText("Bs" + String.format("%.2f", ivita));
+        txttotal.setText("Bs" + String.format("%.2f", (mon + ivita)));
 
         cargarticket();
 
@@ -261,11 +262,11 @@ public class Pago_Orden extends javax.swing.JFrame {
             boolean detalles = true;
 
             for (Models.Ventas v : listaProductos) {
-                 iva = this.montototal * 0.06;
-                double total = v.getPreciounitario() * v.getCantidad() + iva;
+                double total = v.getPreciounitario() * v.getCantidad();
+                double total2 = total * 1.06;
                
 
-                boolean registrado = ventasDAO.registrardetallefactura(id_venta, v.getCodigo(), v.getCantidad(), total);
+                boolean registrado = ventasDAO.registrardetallefactura(id_venta, v.getCodigo(), v.getCantidad(), total2);
 
                 if (!registrado) {
                     error = true;
@@ -278,7 +279,8 @@ public class Pago_Orden extends javax.swing.JFrame {
                 Clientes datosCliente = clientesDAO.obtenerCliente(idCliente);
                 String nombreCompleto = (datosCliente != null) ? datosCliente.getNombre() + " " + datosCliente.getApellido() : nombrecliente;
                 String cedulaCliente = (datosCliente != null) ? datosCliente.getCedula() : "N/A";
-                 double totalFinal = montototal + iva;
+                double totalfinal2 = montototal * 0.06;
+                 double totalFinal = montototal+ totalfinal2;
                 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 String fechaActual = sdf.format(new Date());
