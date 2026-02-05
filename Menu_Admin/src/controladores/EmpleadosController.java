@@ -68,42 +68,47 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
                     usuario.setNombre_user(admin.txtnombre_user.getText().trim());
                     usuario.setPassword(admin.txtpassword.getText().trim());
 
-                    int usuarioregistrado = usuariodao.registrarusuarios(usuario);
+                    if (empleadosdao.existeCedula(admin.txtcedula_emp.getText().trim())) {
+                        JOptionPane.showMessageDialog(null, "La cedula ya esta en uso");
+                    } else {
+                        int usuarioregistrado = usuariodao.registrarusuarios(usuario);
 
-                    if (usuarioregistrado >= 0) {
-                        empleados.setCedula(admin.txtcedula_emp.getText().trim());
-                        empleados.setNombre(admin.txtnombre_emp.getText().trim());
-                        empleados.setApellido(admin.txtapellido_emp.getText().trim());
-                        empleados.setDireccion(admin.txtdireccion_emp.getText().trim());
-                        empleados.setEdad(Integer.parseInt(admin.txtedad_emp.getText()));
-                        empleados.setId_usuario(usuarioregistrado);
+                        if (usuarioregistrado >= 0) {
+                            empleados.setCedula(admin.txtcedula_emp.getText().trim());
+                            empleados.setNombre(admin.txtnombre_emp.getText().trim());
+                            empleados.setApellido(admin.txtapellido_emp.getText().trim());
+                            empleados.setDireccion(admin.txtdireccion_emp.getText().trim());
+                            empleados.setEdad(Integer.parseInt(admin.txtedad_emp.getText()));
+                            empleados.setId_usuario(usuarioregistrado);
 
-                        if (empleadosdao.registrarempleado(empleados)) {
-                            limpiarceldas();
-                            inicializartabla_empleado();
-                            cargartabla_empleado();
-                            JOptionPane.showMessageDialog(null, "Empleado registrado con exito");
+                            if (empleadosdao.registrarempleado(empleados)) {
+                                limpiarceldas();
+                                inicializartabla_empleado();
+                                cargartabla_empleado();
+                                JOptionPane.showMessageDialog(null, "Empleado registrado con exito");
 
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Error al registrar el empleado");
+
+                            }
                         } else {
-                            JOptionPane.showMessageDialog(null, "Error al registrar el empleado");
+                            JOptionPane.showMessageDialog(null, "La Cedula Ya Esta Registrada");
 
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "La Cedula Ya Esta Registrada");
 
                     }
-
                 }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Debe ingresar una edad correcta");
             }
 
-        } else if (e.getSource() == admin.btnmodificar_emp) {
+        } else if (e.getSource() == admin.btnmodificar_emp)
+
+        {
             if (admin.txtcedula_emp.getText().equals("") || admin.txtnombre_emp.getText().equals("")
                     || admin.txtapellido_emp.getText().equals("")
                     || admin.txtdireccion_emp.getText().equals("") || admin.txtedad_emp.getText().equals("")
-                    || admin.txtnombre_user.getText().equals("")
-                    ) {
+                    || admin.txtnombre_user.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Todos los campos deben ser llenados");
 
             } else {
