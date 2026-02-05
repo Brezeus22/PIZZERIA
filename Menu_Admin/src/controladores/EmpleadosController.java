@@ -26,31 +26,40 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
     private int id_usuario = -1;
     private int id_emp = -1;
 
-    public EmpleadosController(Usuarios usuario, UsuariosDAO usuariodao, Empleados empleados, EmpleadosDAO empleadosdao, Menu2 admin) {
+    public EmpleadosController(Usuarios usuario, UsuariosDAO usuariodao, Empleados empleados, EmpleadosDAO empleadosdao,
+            Menu2 admin) {
         this.usuario = usuario;
         this.usuariodao = usuariodao;
         this.empleados = empleados;
         this.empleadosdao = empleadosdao;
         this.admin = admin;
 
-        //registrar
+        // registrar
         this.admin.btnguardar_emp.addActionListener(this);
-        //modificar
+        // modificar
         this.admin.btnmodificar_emp.addActionListener(this);
         // tabla
         this.admin.jTable_emp.addMouseListener(this);
-        //eliminar
+        // eliminar
         this.admin.btneliminar_emp.addActionListener(this);
-        //buscar
+        // buscar
         this.admin.txtbuscar_emp.addKeyListener(this);
+
+        // validacion
+        this.admin.txtcedula_emp.addKeyListener(this);
+        this.admin.txtnombre_emp.addKeyListener(this);
+        this.admin.txtapellido_emp.addKeyListener(this);
+        this.admin.txtedad_emp.addKeyListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == admin.btnguardar_emp) {
             try {
-                if (admin.txtcedula_emp.getText().equals("") || admin.txtnombre_emp.getText().equals("") || admin.txtapellido_emp.getText().equals("")
-                        || admin.txtdireccion_emp.getText().equals("") || admin.txtedad_emp.getText().equals("") || admin.txtnombre_user.getText().equals("")
+                if (admin.txtcedula_emp.getText().equals("") || admin.txtnombre_emp.getText().equals("")
+                        || admin.txtapellido_emp.getText().equals("")
+                        || admin.txtdireccion_emp.getText().equals("") || admin.txtedad_emp.getText().equals("")
+                        || admin.txtnombre_user.getText().equals("")
                         || admin.txtpassword.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Todos los campos deben ser llenados");
 
@@ -80,7 +89,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
 
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "error al registrar el usuario");
+                        JOptionPane.showMessageDialog(null, "La Cedula Ya Esta Registrada");
 
                     }
 
@@ -90,9 +99,11 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
             }
 
         } else if (e.getSource() == admin.btnmodificar_emp) {
-            if (admin.txtcedula_emp.getText().equals("") || admin.txtnombre_emp.getText().equals("") || admin.txtapellido_emp.getText().equals("")
-                    || admin.txtdireccion_emp.getText().equals("") || admin.txtedad_emp.getText().equals("") || admin.txtnombre_user.getText().equals("")
-                    || admin.txtpassword.getText().equals("")) {
+            if (admin.txtcedula_emp.getText().equals("") || admin.txtnombre_emp.getText().equals("")
+                    || admin.txtapellido_emp.getText().equals("")
+                    || admin.txtdireccion_emp.getText().equals("") || admin.txtedad_emp.getText().equals("")
+                    || admin.txtnombre_user.getText().equals("")
+                    ) {
                 JOptionPane.showMessageDialog(null, "Todos los campos deben ser llenados");
 
             } else {
@@ -123,15 +134,18 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
             }
 
         } else if (e.getSource() == admin.btneliminar_emp) {
-            if (admin.txtcedula_emp.getText().equals("") || admin.txtnombre_emp.getText().equals("") || admin.txtapellido_emp.getText().equals("")
-                    || admin.txtdireccion_emp.getText().equals("") || admin.txtedad_emp.getText().equals("") || admin.txtnombre_user.getText().equals("")) {
+            if (admin.txtcedula_emp.getText().equals("") || admin.txtnombre_emp.getText().equals("")
+                    || admin.txtapellido_emp.getText().equals("")
+                    || admin.txtdireccion_emp.getText().equals("") || admin.txtedad_emp.getText().equals("")
+                    || admin.txtnombre_user.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Todos los campos deben ser llenados");
 
             } else {
                 int filaseleccionada = admin.jTable_emp.getSelectedRow();
                 if (filaseleccionada >= 0) {
                     int id_emp = Integer.parseInt(modelotabla.getValueAt(filaseleccionada, 0).toString());
-                    int confirmar = JOptionPane.showConfirmDialog(null, "Esta seguro que desae eliminar el empleado?", "confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+                    int confirmar = JOptionPane.showConfirmDialog(null, "Esta seguro que desae eliminar el empleado?",
+                            "confirmar eliminacion", JOptionPane.YES_NO_OPTION);
                     if (confirmar == JOptionPane.YES_OPTION) {
                         if (empleadosdao.eliminarempleado(id_emp, id_usuario)) {
                             limpiarceldas();
@@ -190,6 +204,18 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
 
     @Override
     public void keyTyped(KeyEvent e) {
+        char c = e.getKeyChar();
+        if (e.getSource() == admin.txtnombre_emp || e.getSource() == admin.txtapellido_emp) {
+            if (Character.isDigit(c)) {
+                e.consume();
+                java.awt.Toolkit.getDefaultToolkit().beep();
+            }
+        } else if (e.getSource() == admin.txtcedula_emp || e.getSource() == admin.txtedad_emp) {
+            if (!Character.isDigit(c)) {
+                e.consume();
+                java.awt.Toolkit.getDefaultToolkit().beep();
+            }
+        }
     }
 
     @Override
@@ -198,17 +224,16 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if(e.getSource() == admin.txtbuscar_emp){
+        if (e.getSource() == admin.txtbuscar_emp) {
             String buscar = admin.txtbuscar_emp.getText().trim();
-            if(buscar.equals("")){
+            if (buscar.equals("")) {
                 limpiarceldas();
                 cargartabla_empleado();
-            
-            }
-            else{
+
+            } else {
                 cargarbusqueda(buscar);
             }
-        
+
         }
     }
 
@@ -234,15 +259,15 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
         modelotabla.setRowCount(0);
         List<Empleados> empleado = empleadosdao.listaempleados();
         for (Empleados e : empleado) {
-            modelotabla.addRow(new Object[]{
-                e.getId_emp(),
-                e.getCedula(),
-                e.getNombre(),
-                e.getApellido(),
-                e.getEdad(),
-                e.getDireccion(),
-                e.getNombre_user(),
-                e.getId_usuario()
+            modelotabla.addRow(new Object[] {
+                    e.getId_emp(),
+                    e.getCedula(),
+                    e.getNombre(),
+                    e.getApellido(),
+                    e.getEdad(),
+                    e.getDireccion(),
+                    e.getNombre_user(),
+                    e.getId_usuario()
 
             });
 
@@ -264,37 +289,35 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
         admin.btneliminar_emp.setEnabled(false);
 
     }
-    
-        public void limpiartabla() {
+
+    public void limpiartabla() {
         for (int i = 0; i < modelotabla.getRowCount(); i++) {
             modelotabla.removeRow(i);
             i = i - 1;
 
         }
     }
-        
-        public void cargarbusqueda(String valor){
-            limpiartabla();
-            List<Empleados> empleado = empleadosdao.buscarempleEmpleados(valor);
-            modelotabla = (DefaultTableModel) admin.jTable_emp.getModel();
-            
-            for(Empleados e : empleado){
-                modelotabla.addRow(new Object[]{
-                e.getId_emp(),
-                e.getCedula(),
-                e.getNombre(),
-                e.getApellido(),
-                e.getEdad(),
-                e.getDireccion(),
-                e.getNombre_user(),
-                e.getId_usuario()
-            
-            
-            
+
+    public void cargarbusqueda(String valor) {
+        limpiartabla();
+        List<Empleados> empleado = empleadosdao.buscarempleEmpleados(valor);
+        modelotabla = (DefaultTableModel) admin.jTable_emp.getModel();
+
+        for (Empleados e : empleado) {
+            modelotabla.addRow(new Object[] {
+                    e.getId_emp(),
+                    e.getCedula(),
+                    e.getNombre(),
+                    e.getApellido(),
+                    e.getEdad(),
+                    e.getDireccion(),
+                    e.getNombre_user(),
+                    e.getId_usuario()
+
             });
-            
-            }
-        
+
         }
+
+    }
 
 }
