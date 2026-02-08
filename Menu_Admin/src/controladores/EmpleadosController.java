@@ -68,7 +68,9 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
                     usuario.setNombre_user(admin.txtnombre_user.getText().trim());
                     usuario.setPassword(admin.txtpassword.getText().trim());
 
-                    if (empleadosdao.existeCedula(admin.txtcedula_emp.getText().trim())) {
+                    if (admin.txtcedula_emp.getText().length() < 7 || admin.txtcedula_emp.getText().length() > 9) {
+                        JOptionPane.showMessageDialog(null, "La cédula debe tener entre 7 y 9 dígitos");
+                    } else if (empleadosdao.existeCedula(admin.txtcedula_emp.getText().trim())) {
                         JOptionPane.showMessageDialog(null, "La cedula ya esta en uso");
                     } else {
                         int usuarioregistrado = usuariodao.registrarusuarios(usuario);
@@ -126,7 +128,9 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
                     empleados.setNombre_user(admin.txtnombre_user.getText().trim());
                     empleados.setPassword(admin.txtpassword.getText().trim());
 
-                    if (empleadosdao.modificarempleado(empleados)) {
+                    if (admin.txtcedula_emp.getText().length() < 7 || admin.txtcedula_emp.getText().length() > 9) {
+                        JOptionPane.showMessageDialog(null, "La cédula debe tener entre 7 y 9 dígitos");
+                    } else if (empleadosdao.modificarempleado(empleados)) {
                         limpiarceldas();
                         inicializartabla_empleado();
                         cargartabla_empleado();

@@ -191,4 +191,34 @@ public class ClientesDAO {
         }
         return 0;
     }
+
+    // metodo para buscar clientes
+    public List<Clientes> buscarClientes(String valor) {
+        List<Clientes> clientes = new ArrayList<>();
+        String sql = "SELECT * FROM clientes WHERE nombre LIKE ? OR apellido LIKE ? OR cedula LIKE ?";
+
+        try {
+            con = ConexionSQL.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + valor + "%");
+            ps.setString(2, "%" + valor + "%");
+            ps.setString(3, "%" + valor + "%");
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Clientes objC = new Clientes();
+                objC.setId_cliente(rs.getInt("id_cliente"));
+                objC.setCedula(rs.getString("cedula"));
+                objC.setNombre(rs.getString("nombre"));
+                objC.setApellido(rs.getString("apellido"));
+                objC.setTelefono(rs.getString("telefono"));
+                objC.setDireccion(rs.getString("direccion"));
+
+                clientes.add(objC);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al buscar clientes: " + e.getMessage());
+        }
+        return clientes;
+    }
 }

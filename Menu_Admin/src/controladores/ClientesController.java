@@ -69,7 +69,10 @@ public class ClientesController implements ActionListener, MouseListener, KeyLis
                     clientes.setTelefono(admin.txttelefono_cliente.getText());
                     clientes.setDireccion(admin.txtdireccion_cliente.getText().trim());
 
-                    if (clientesdao.existeCedula(admin.txtcedula_cliente.getText())) {
+                    if (admin.txtcedula_cliente.getText().length() < 7
+                            || admin.txtcedula_cliente.getText().length() > 9) {
+                        JOptionPane.showMessageDialog(null, "La cédula debe tener entre 7 y 9 dígitos");
+                    } else if (clientesdao.existeCedula(admin.txtcedula_cliente.getText())) {
                         JOptionPane.showMessageDialog(null, "La cédula ya está registrada.");
                     } else if (clientesdao.registrarcliente(clientes)) {
 
@@ -105,7 +108,10 @@ public class ClientesController implements ActionListener, MouseListener, KeyLis
                     clientes.setTelefono(admin.txttelefono_cliente.getText());
                     clientes.setDireccion(admin.txtdireccion_cliente.getText().trim());
 
-                    if (clientesdao.modificarcliente(clientes)) {
+                    if (admin.txtcedula_cliente.getText().length() < 7
+                            || admin.txtcedula_cliente.getText().length() > 9) {
+                        JOptionPane.showMessageDialog(null, "La cédula debe tener entre 7 y 9 dígitos");
+                    } else if (clientesdao.modificarcliente(clientes)) {
 
                         inicializartabla();
                         cargartabla();
@@ -244,10 +250,29 @@ public class ClientesController implements ActionListener, MouseListener, KeyLis
                 cargartabla();
 
             } else {
-                // Aquí puedes implementar la búsqueda si tienes el método en ClientesDAO
+                cargarBusqueda(busqueda);
             }
 
         }
+    }
+
+    public void cargarBusqueda(String valor) {
+        limpiartabla();
+        List<Clientes> cliente = clientesdao.buscarClientes(valor);
+        modeloTabla = (DefaultTableModel) admin.table_cliente.getModel();
+
+        for (Clientes c : cliente) {
+            modeloTabla.addRow(new Object[] {
+                    c.getId_cliente(),
+                    c.getNombre(),
+                    c.getApellido(),
+                    c.getCedula(),
+                    c.getTelefono(),
+                    c.getDireccion()
+            });
+
+        }
+
     }
 
     public void limpiartabla() {
