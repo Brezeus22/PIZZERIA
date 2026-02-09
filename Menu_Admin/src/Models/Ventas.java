@@ -15,6 +15,9 @@ public class Ventas {
         this.descripcion = descripcion;
     }
 
+    public Ventas() {
+    }
+
     public int getCodigo() {
         return codigo;
     }

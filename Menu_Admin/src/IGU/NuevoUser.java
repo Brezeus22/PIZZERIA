@@ -267,9 +267,13 @@ public class NuevoUser extends javax.swing.JFrame {
 
                         ClientesDAO dao = new ClientesDAO();
 
-                        if (txtcedula.getText().length() < 7 || txtcedula.getText().length() > 9) {
-                                JOptionPane.showMessageDialog(null, "La cédula debe tener entre 7 y 9 dígitos");
-                        } else if (dao.existeCedula(txtcedula.getText())) {
+                        if (txtcedula.getText().length() < 5 || txtcedula.getText().length() > 8) {
+                                JOptionPane.showMessageDialog(null, "La cédula debe tener entre 6 y 8 dígitos");
+                        }
+                        else if(txttelefono.getText().length() != 11 ){
+                            JOptionPane.showMessageDialog(null, "El nro de telefono debe tener 11 digitos");
+                            
+                        }else if (dao.existeCedula(txtcedula.getText())) {
                                 JOptionPane.showMessageDialog(null, "La cedula ya esta en uso");
                         } else if (dao.registrarcliente(cliente)) {
                                 JOptionPane.showMessageDialog(null, "Cliente registrado exitosamente");

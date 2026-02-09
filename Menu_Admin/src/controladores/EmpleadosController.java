@@ -127,9 +127,12 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
                     empleados.setId_usuario(id_usuario);
                     empleados.setNombre_user(admin.txtnombre_user.getText().trim());
                     empleados.setPassword(admin.txtpassword.getText().trim());
+                     if (admin.txttelefono_cliente.getText().length() != 11){
+                        JOptionPane.showMessageDialog(null, "El numero debe tener 11 dígitos");
+                    }
 
-                    if (admin.txtcedula_emp.getText().length() < 7 || admin.txtcedula_emp.getText().length() > 9) {
-                        JOptionPane.showMessageDialog(null, "La cédula debe tener entre 7 y 9 dígitos");
+                    if (admin.txtcedula_emp.getText().length() < 6 || admin.txtcedula_emp.getText().length() > 8) {
+                        JOptionPane.showMessageDialog(null, "La cédula debe tener entre 6 y 8 dígitos");
                     } else if (empleadosdao.modificarempleado(empleados)) {
                         limpiarceldas();
                         inicializartabla_empleado();
