@@ -1726,8 +1726,8 @@
                                           <Group type="102" alignment="1" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jLabel32" alignment="1" min="-2" max="-2" attributes="0"/>
                                                   <Component id="jLabel45" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel32" alignment="1" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
@@ -1740,7 +1740,7 @@
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="txtfechaemp" pref="160" max="32767" attributes="0"/>
+                                  <Component id="txtfecha_emp" pref="160" max="32767" attributes="0"/>
                                   <Component id="txtdireccion_emp" alignment="0" pref="160" max="32767" attributes="0"/>
                                   <Component id="ComboBox_Rol" alignment="0" max="32767" attributes="0"/>
                                   <Component id="txtpassword" max="32767" attributes="0"/>
@@ -1780,7 +1780,7 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="txtnombre_emp" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel32" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtfechaemp" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtfecha_emp" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel28" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -1916,7 +1916,7 @@
                         <Property name="text" type="java.lang.String" value="jButton5"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtfechaemp">
+                    <Component class="javax.swing.JTextField" name="txtfecha_emp">
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                       </AuxValues>
@@ -2054,7 +2054,7 @@
                             <Column editable="true" title="Cedula" type="java.lang.Object"/>
                             <Column editable="true" title="Nombre" type="java.lang.Object"/>
                             <Column editable="true" title="Apellido" type="java.lang.Object"/>
-                            <Column editable="true" title="Edad" type="java.lang.Object"/>
+                            <Column editable="true" title="Fecha de Nacim" type="java.lang.Object"/>
                             <Column editable="true" title="Direccion" type="java.lang.Object"/>
                             <Column editable="true" title="nombre_user" type="java.lang.Object"/>
                           </Table>
@@ -2072,6 +2072,16 @@
                               <Renderer/>
                             </Column>
                             <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>

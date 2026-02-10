@@ -49,7 +49,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
         this.admin.txtcedula_emp.addKeyListener(this);
         this.admin.txtnombre_emp.addKeyListener(this);
         this.admin.txtapellido_emp.addKeyListener(this);
-        this.admin.txtedad_emp.addKeyListener(this);
+        this.admin.txtfecha_emp.addKeyListener(this);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
             try {
                 if (admin.txtcedula_emp.getText().equals("") || admin.txtnombre_emp.getText().equals("")
                         || admin.txtapellido_emp.getText().equals("")
-                        || admin.txtdireccion_emp.getText().equals("") || admin.txtedad_emp.getText().equals("")
+                        || admin.txtdireccion_emp.getText().equals("") || admin.txtfecha_emp.getText().equals("")
                         || admin.txtnombre_user.getText().equals("")
                         || admin.txtpassword.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Todos los campos deben ser llenados");
@@ -80,7 +80,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
                             empleados.setNombre(admin.txtnombre_emp.getText().trim());
                             empleados.setApellido(admin.txtapellido_emp.getText().trim());
                             empleados.setDireccion(admin.txtdireccion_emp.getText().trim());
-                            empleados.setEdad(Integer.parseInt(admin.txtedad_emp.getText()));
+                            empleados.setFecha(Integer.parseInt(admin.txtfecha_emp.getText()));
                             empleados.setId_usuario(usuarioregistrado);
 
                             if (empleadosdao.registrarempleado(empleados)) {
@@ -109,7 +109,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
         {
             if (admin.txtcedula_emp.getText().equals("") || admin.txtnombre_emp.getText().equals("")
                     || admin.txtapellido_emp.getText().equals("")
-                    || admin.txtdireccion_emp.getText().equals("") || admin.txtedad_emp.getText().equals("")
+                    || admin.txtdireccion_emp.getText().equals("") || admin.txtfecha_emp.getText().equals("")
                     || admin.txtnombre_user.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Todos los campos deben ser llenados");
 
@@ -122,7 +122,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
                     empleados.setCedula(admin.txtcedula_emp.getText().trim());
                     empleados.setNombre(admin.txtnombre_emp.getText().trim());
                     empleados.setApellido(admin.txtapellido_emp.getText().trim());
-                    empleados.setEdad(Integer.parseInt(admin.txtedad_emp.getText()));
+                    empleados.setFecha(Integer.parseInt(admin.txtfecha_emp.getText()));
                     empleados.setDireccion(admin.txtdireccion_emp.getText().trim());
                     empleados.setId_usuario(id_usuario);
                     empleados.setNombre_user(admin.txtnombre_user.getText().trim());
@@ -148,7 +148,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
         } else if (e.getSource() == admin.btneliminar_emp) {
             if (admin.txtcedula_emp.getText().equals("") || admin.txtnombre_emp.getText().equals("")
                     || admin.txtapellido_emp.getText().equals("")
-                    || admin.txtdireccion_emp.getText().equals("") || admin.txtedad_emp.getText().equals("")
+                    || admin.txtdireccion_emp.getText().equals("") || admin.txtfecha_emp.getText().equals("")
                     || admin.txtnombre_user.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Todos los campos deben ser llenados");
 
@@ -191,7 +191,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
             admin.txtcedula_emp.setText(modelotabla.getValueAt(filaseleccionada, 1).toString());
             admin.txtnombre_emp.setText(modelotabla.getValueAt(filaseleccionada, 2).toString());
             admin.txtapellido_emp.setText(modelotabla.getValueAt(filaseleccionada, 3).toString());
-            admin.txtedad_emp.setText(modelotabla.getValueAt(filaseleccionada, 4).toString());
+            admin.txtfecha_emp.setText(modelotabla.getValueAt(filaseleccionada, 4).toString());
             admin.txtdireccion_emp.setText(modelotabla.getValueAt(filaseleccionada, 5).toString());
             admin.txtnombre_user.setText(modelotabla.getValueAt(filaseleccionada, 6).toString());
 
@@ -222,7 +222,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
                 e.consume();
                 java.awt.Toolkit.getDefaultToolkit().beep();
             }
-        } else if (e.getSource() == admin.txtcedula_emp || e.getSource() == admin.txtedad_emp) {
+        } else if (e.getSource() == admin.txtcedula_emp || e.getSource() == admin.txtfecha_emp) {
             if (!Character.isDigit(c)) {
                 e.consume();
                 java.awt.Toolkit.getDefaultToolkit().beep();
@@ -276,7 +276,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
                     e.getCedula(),
                     e.getNombre(),
                     e.getApellido(),
-                    e.getEdad(),
+                    e.getFecha(),
                     e.getDireccion(),
                     e.getNombre_user(),
                     e.getId_usuario()
@@ -292,7 +292,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
         admin.txtnombre_emp.setText("");
         admin.txtapellido_emp.setText("");
         admin.txtdireccion_emp.setText("");
-        admin.txtedad_emp.setText("");
+        admin.txtfecha_emp.setText("");
         admin.txtnombre_user.setText("");
         admin.txtpassword.setText("");
 
@@ -321,7 +321,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
                     e.getCedula(),
                     e.getNombre(),
                     e.getApellido(),
-                    e.getEdad(),
+                    e.getFecha(),
                     e.getDireccion(),
                     e.getNombre_user(),
                     e.getId_usuario()

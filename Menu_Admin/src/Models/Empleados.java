@@ -5,18 +5,18 @@ public class Empleados {
     private String cedula;
     private String nombre;
     private String apellido;
-    private int edad;
+    private int fecha;
     private String direccion;
     private int id_usuario;
     private String nombre_user;
     private String password;
 
-    public Empleados(int id_emp, String cedula, String nombre, String apellido, int edad, String direccion, int id_usuario, String nombre_user, String password) {
+    public Empleados(int id_emp, String cedula, String nombre, String apellido, int fecha, String direccion, int id_usuario, String nombre_user, String password) {
         this.id_emp = id_emp;
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.edad = edad;
+        this.fecha = fecha;
         this.direccion = direccion;
         this.id_usuario = id_usuario;
         this.nombre_user = nombre_user;
@@ -75,12 +75,12 @@ public class Empleados {
         this.apellido = apellido;
     }
 
-    public int getEdad() {
-        return edad;
+    public int getFecha() {
+        return fecha;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setFecha(int fecha) {
+        this.fecha = fecha;
     }
 
     public String getDireccion() {

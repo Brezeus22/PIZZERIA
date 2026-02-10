@@ -31,7 +31,7 @@ public class EmpleadosDAO {
                 objE.setCedula(rs.getString("cedula"));
                 objE.setNombre(rs.getString("nombre"));
                 objE.setApellido(rs.getString("apellido"));
-                objE.setEdad(rs.getInt("edad"));
+                objE.setFecha(rs.getInt("fecha"));
                 objE.setDireccion(rs.getString("direccion"));
                 objE.setId_usuario(rs.getInt("id_usuario"));
                 objE.setNombre_user(rs.getString("nombre_user"));
@@ -61,7 +61,7 @@ public class EmpleadosDAO {
                 empleado.setCedula(rs.getString("cedula"));
                 empleado.setNombre(rs.getString("nombre"));
                 empleado.setApellido(rs.getString("apllido"));
-                empleado.setEdad(rs.getInt("edad"));
+                empleado.setFecha(rs.getInt("fecha"));
                 empleado.setDireccion(rs.getString("direccion"));
             }
         } catch (SQLException e) {
@@ -72,7 +72,7 @@ public class EmpleadosDAO {
 
     //metodo para registrar un empleado
     public boolean registrarempleado(Empleados empleado) {
-        String sql = "INSERT INTO empleados(cedula, nombre, apellido, edad, direccion, id_usuario) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO empleados(cedula, nombre, apellido, fecha, direccion, id_usuario) VALUES(?,?,?,?,?,?)";
 
         try {
             con = ConexionSQL.getConnection();
@@ -80,7 +80,7 @@ public class EmpleadosDAO {
             ps.setString(1, empleado.getCedula());
             ps.setString(2, empleado.getNombre());
             ps.setString(3, empleado.getApellido());
-            ps.setInt(4, empleado.getEdad());
+            ps.setInt(4, empleado.getFecha());
             ps.setString(5, empleado.getDireccion());
             ps.setInt(6, empleado.getId_usuario());
             ps.execute();
@@ -94,7 +94,7 @@ public class EmpleadosDAO {
 
     //metodo para modificar un empleado 
     public boolean modificarempleado(Empleados empleado) {
-        String sql = "UPDATE empleados SET cedula = ?, nombre = ?, apellido = ?, edad = ?, direccion = ? WHERE id_emp =?";
+        String sql = "UPDATE empleados SET cedula = ?, nombre = ?, apellido = ?, fecha = ?, direccion = ? WHERE id_emp =?";
 
         try {
             con = ConexionSQL.getConnection();
@@ -102,7 +102,7 @@ public class EmpleadosDAO {
             ps.setString(1, empleado.getCedula());
             ps.setString(2, empleado.getNombre());
             ps.setString(3, empleado.getApellido());
-            ps.setInt(4, empleado.getEdad());
+            ps.setInt(4, empleado.getFecha());
             ps.setString(5, empleado.getDireccion());
             ps.setInt(6, empleado.getId_emp());
             ps.executeUpdate();
@@ -160,7 +160,7 @@ public class EmpleadosDAO {
         String sql = "SELECT e.*, u.nombre_user "
                 + "FROM empleados e "
                 + "INNER JOIN usuarios u ON e.id_usuario = u.id_usuario "
-                + "WHERE e.nombre LIKE ? OR e.cedula LIKE ? OR e.edad LIKE ?";
+                + "WHERE e.nombre LIKE ? OR e.cedula LIKE ? OR e.fecha LIKE ?";
         Empleados empleado = null;
 
         try {
@@ -177,7 +177,7 @@ public class EmpleadosDAO {
                 empleado.setCedula(rs.getString("cedula"));
                 empleado.setNombre(rs.getString("nombre"));
                 empleado.setApellido(rs.getString("apellido"));
-                empleado.setEdad(rs.getInt("edad"));
+                empleado.setFecha(rs.getInt("fecha"));
                 empleado.setDireccion(rs.getString("direccion"));
                 empleado.setNombre_user(rs.getString("nombre_user"));
                 empleado.setId_usuario(rs.getInt("id_usuario"));
