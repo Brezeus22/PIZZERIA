@@ -129,10 +129,8 @@ public class Menu2 extends javax.swing.JFrame {
         txt_total_pagar = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
         txt_fecha = new javax.swing.JTextField();
         jComboBox_cliente = new javax.swing.JComboBox<>();
-        jComboBox_estado = new javax.swing.JComboBox<>();
         jPanel_CLIENTES = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         table_cliente = new javax.swing.JTable();
@@ -510,11 +508,6 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel26.setText("Cliente:");
         jPanel14.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, 90, -1));
 
-        jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel27.setText("Estado:");
-        jPanel14.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 90, -1));
-
         txt_fecha.setEditable(false);
         txt_fecha.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         txt_fecha.setForeground(new java.awt.Color(51, 204, 0));
@@ -523,10 +516,6 @@ public class Menu2 extends javax.swing.JFrame {
 
         jComboBox_cliente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jPanel14.add(jComboBox_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 170, -1));
-
-        jComboBox_estado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox_estado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
-        jPanel14.add(jComboBox_estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, 170, -1));
 
         javax.swing.GroupLayout jPanel_VENTASLayout = new javax.swing.GroupLayout(jPanel_VENTAS);
         jPanel_VENTAS.setLayout(jPanel_VENTASLayout);
@@ -1356,7 +1345,6 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JButton jButton_PRODUCTOS;
     private javax.swing.JButton jButton_VENTAS;
     public javax.swing.JComboBox<String> jComboBox_cliente;
-    private javax.swing.JComboBox<String> jComboBox_estado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1369,7 +1357,6 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
     public javax.swing.JLabel jLabel28;
     public javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
