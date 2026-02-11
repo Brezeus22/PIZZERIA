@@ -78,8 +78,8 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
                     usuario.setNombre_user(admin.txtnombre_user.getText().trim());
                     usuario.setPassword(admin.txtpassword.getText().trim());
 
-                    if (admin.txtcedula_emp.getText().length() < 7 || admin.txtcedula_emp.getText().length() > 9) {
-                        JOptionPane.showMessageDialog(null, "La cédula debe tener entre 7 y 9 dígitos");
+                    if (admin.txtcedula_emp.getText().length() < 7 || admin.txtcedula_emp.getText().length() > 8) {
+                        JOptionPane.showMessageDialog(null, "La cédula debe tener entre 7 y 8 dígitos");
                     } else if (empleadosdao.existeCedula(admin.txtcedula_emp.getText().trim())) {
                         JOptionPane.showMessageDialog(null, "La cedula ya esta en uso");
                     } else {
@@ -143,8 +143,8 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
                         JOptionPane.showMessageDialog(null, "El numero debe tener 11 dígitos");
                     }
 
-                    if (admin.txtcedula_emp.getText().length() < 6 || admin.txtcedula_emp.getText().length() > 8) {
-                        JOptionPane.showMessageDialog(null, "La cédula debe tener entre 6 y 8 dígitos");
+                    if (admin.txtcedula_emp.getText().length() < 7 || admin.txtcedula_emp.getText().length() > 8) {
+                        JOptionPane.showMessageDialog(null, "La cédula debe tener entre 7 y 8 dígitos");
                     } else if (empleadosdao.modificarempleado(empleados)) {
                         limpiarceldas();
                         inicializartabla_empleado();

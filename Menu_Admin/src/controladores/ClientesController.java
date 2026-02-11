@@ -69,9 +69,9 @@ public class ClientesController implements ActionListener, MouseListener, KeyLis
                     clientes.setTelefono(admin.txttelefono_cliente.getText());
                     clientes.setDireccion(admin.txtdireccion_cliente.getText().trim());
 
-                    if (admin.txtcedula_cliente.getText().length() < 6
+                    if (admin.txtcedula_cliente.getText().length() < 7
                             || admin.txtcedula_cliente.getText().length() > 8) {
-                        JOptionPane.showMessageDialog(null, "La cédula debe tener entre 6 y 8 dígitos");
+                        JOptionPane.showMessageDialog(null, "La cédula debe tener entre 7 y 8 dígitos");
                     } else if (clientesdao.existeCedula(admin.txtcedula_cliente.getText())) {
                         JOptionPane.showMessageDialog(null, "La cédula ya está registrada.");
                     } else if (clientesdao.registrarcliente(clientes)) {
@@ -107,15 +107,15 @@ public class ClientesController implements ActionListener, MouseListener, KeyLis
                     clientes.setCedula(admin.txtcedula_cliente.getText());
                     clientes.setTelefono(admin.txttelefono_cliente.getText());
                     clientes.setDireccion(admin.txtdireccion_cliente.getText().trim());
-                    
-                    if (admin.txttelefono_cliente.getText().length() != 11){
+
+                    if (admin.txttelefono_cliente.getText().length() != 11) {
                         JOptionPane.showMessageDialog(null, "El numero debe tener 11 dígitos");
                     }
-                    
-                    if (admin.txtcedula_cliente.getText().length() < 6
+
+                    if (admin.txtcedula_cliente.getText().length() < 7
                             || admin.txtcedula_cliente.getText().length() > 8) {
-                        JOptionPane.showMessageDialog(null, "La cédula debe tener entre 6 y 8 dígitos");
-                                                        
+                        JOptionPane.showMessageDialog(null, "La cédula debe tener entre 7 y 8 dígitos");
+
                     } else if (clientesdao.modificarcliente(clientes)) {
 
                         inicializartabla();
@@ -176,13 +176,13 @@ public class ClientesController implements ActionListener, MouseListener, KeyLis
         modeloTabla.setRowCount(0);
         List<Clientes> clientes = clientesdao.obtenertodoslosclientes();
         for (Clientes c : clientes) {
-            modeloTabla.addRow(new Object[] {
-                    c.getId_cliente(),
-                    c.getNombre(),
-                    c.getApellido(),
-                    c.getCedula(),
-                    c.getTelefono(),
-                    c.getDireccion(), });
+            modeloTabla.addRow(new Object[]{
+                c.getId_cliente(),
+                c.getNombre(),
+                c.getApellido(),
+                c.getCedula(),
+                c.getTelefono(),
+                c.getDireccion(),});
 
         }
 
@@ -267,13 +267,13 @@ public class ClientesController implements ActionListener, MouseListener, KeyLis
         modeloTabla = (DefaultTableModel) admin.table_cliente.getModel();
 
         for (Clientes c : cliente) {
-            modeloTabla.addRow(new Object[] {
-                    c.getId_cliente(),
-                    c.getNombre(),
-                    c.getApellido(),
-                    c.getCedula(),
-                    c.getTelefono(),
-                    c.getDireccion()
+            modeloTabla.addRow(new Object[]{
+                c.getId_cliente(),
+                c.getNombre(),
+                c.getApellido(),
+                c.getCedula(),
+                c.getTelefono(),
+                c.getDireccion()
             });
 
         }

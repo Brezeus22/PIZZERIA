@@ -75,11 +75,11 @@ public class ProductosControllers implements ActionListener, MouseListener, KeyL
 
         } else if (e.getSource() == admin.btnmodificar_productos) {
             try {
-                if (admin.txtcodigo.getText().equals("") || admin.txtnombre_producto.getText().equals("") || admin.txtprecio.getText().equals("") || admin.txtprecio.getText().equals("")) {
+                if ( admin.txtnombre_producto.getText().equals("") || admin.txtprecio.getText().equals("") || admin.txtprecio.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "debe rellenar todos los campos");
 
                 } else {
-                    productos.setCodigo(Integer.parseInt(admin.txtcodigo.getText()));
+                    //productos.setCodigo(Integer.parseInt(admin.txtcodigo.getText()));
                     productos.setNombre(admin.txtnombre_producto.getText().trim());
                     productos.setDescripcion(admin.txtdescripcion.getText().trim());
                     productos.setCategoria((String) admin.ComboBoxcategoria.getSelectedItem());
@@ -167,7 +167,7 @@ public class ProductosControllers implements ActionListener, MouseListener, KeyL
             admin.btnmodificar_productos.setEnabled(true);
             admin.btneliminar_productos.setEnabled(true);
 
-            admin.txtcodigo.setText(modeloTabla.getValueAt(fliasaleccionada, 0).toString());
+            //admin.txtcodigo.setText(modeloTabla.getValueAt(fliasaleccionada, 0).toString());
             admin.txtnombre_producto.setText(modeloTabla.getValueAt(fliasaleccionada, 1).toString());
             admin.txtdescripcion.setText(modeloTabla.getValueAt(fliasaleccionada, 2).toString());
             admin.ComboBoxcategoria.setSelectedItem(modeloTabla.getValueAt(fliasaleccionada, 3));
@@ -240,7 +240,7 @@ public class ProductosControllers implements ActionListener, MouseListener, KeyL
     }
 
     public void limpiarceldas() {
-        admin.txtcodigo.setText("");
+       // admin.txtcodigo.setText("");
         admin.txtnombre_producto.setText("");
         admin.txtdescripcion.setText("");
         admin.txtprecio.setText("");

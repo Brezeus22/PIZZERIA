@@ -205,7 +205,7 @@ public class EmpleadoPizza extends javax.swing.JFrame {
         ComboBoxtamanio.setBackground(new java.awt.Color(255, 255, 255));
         ComboBoxtamanio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         ComboBoxtamanio.setForeground(new java.awt.Color(0, 0, 0));
-        ComboBoxtamanio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pequenia", "Mediana", "Grande" }));
+        ComboBoxtamanio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pequeña", "Mediana", "Grande" }));
 
         Spinnerpizza.setModel(new javax.swing.SpinnerNumberModel(0, 0, 20, 1));
 
@@ -284,7 +284,7 @@ public class EmpleadoPizza extends javax.swing.JFrame {
         ComboBoxtamaniob.setBackground(new java.awt.Color(255, 255, 255));
         ComboBoxtamaniob.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         ComboBoxtamaniob.setForeground(new java.awt.Color(0, 0, 0));
-        ComboBoxtamaniob.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pequenia", "Mediano", "Grande" }));
+        ComboBoxtamaniob.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pequeña", "Mediana", "Grande" }));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
