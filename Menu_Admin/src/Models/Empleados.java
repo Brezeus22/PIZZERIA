@@ -5,13 +5,13 @@ public class Empleados {
     private String cedula;
     private String nombre;
     private String apellido;
-    private int fecha;
+    private String fecha;
     private String direccion;
     private int id_usuario;
     private String nombre_user;
     private String password;
 
-    public Empleados(int id_emp, String cedula, String nombre, String apellido, int fecha, String direccion, int id_usuario, String nombre_user, String password) {
+    public Empleados(int id_emp, String cedula, String nombre, String apellido, String fecha, String direccion, int id_usuario, String nombre_user, String password) {
         this.id_emp = id_emp;
         this.cedula = cedula;
         this.nombre = nombre;
@@ -75,11 +75,11 @@ public class Empleados {
         this.apellido = apellido;
     }
 
-    public int getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(int fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

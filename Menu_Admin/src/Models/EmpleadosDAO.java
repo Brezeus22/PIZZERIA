@@ -31,7 +31,7 @@ public class EmpleadosDAO {
                 objE.setCedula(rs.getString("cedula"));
                 objE.setNombre(rs.getString("nombre"));
                 objE.setApellido(rs.getString("apellido"));
-                objE.setFecha(rs.getInt("fecha"));
+                objE.setFecha(rs.getString("fecha"));
                 objE.setDireccion(rs.getString("direccion"));
                 objE.setId_usuario(rs.getInt("id_usuario"));
                 objE.setNombre_user(rs.getString("nombre_user"));
@@ -61,7 +61,7 @@ public class EmpleadosDAO {
                 empleado.setCedula(rs.getString("cedula"));
                 empleado.setNombre(rs.getString("nombre"));
                 empleado.setApellido(rs.getString("apllido"));
-                empleado.setFecha(rs.getInt("fecha"));
+                empleado.setFecha(rs.getString("fecha"));
                 empleado.setDireccion(rs.getString("direccion"));
             }
         } catch (SQLException e) {
@@ -80,7 +80,7 @@ public class EmpleadosDAO {
             ps.setString(1, empleado.getCedula());
             ps.setString(2, empleado.getNombre());
             ps.setString(3, empleado.getApellido());
-            ps.setInt(4, empleado.getFecha());
+            ps.setString(4, empleado.getFecha());
             ps.setString(5, empleado.getDireccion());
             ps.setInt(6, empleado.getId_usuario());
             ps.execute();
@@ -102,7 +102,7 @@ public class EmpleadosDAO {
             ps.setString(1, empleado.getCedula());
             ps.setString(2, empleado.getNombre());
             ps.setString(3, empleado.getApellido());
-            ps.setInt(4, empleado.getFecha());
+            ps.setString(4, empleado.getFecha());
             ps.setString(5, empleado.getDireccion());
             ps.setInt(6, empleado.getId_emp());
             ps.executeUpdate();
@@ -177,7 +177,7 @@ public class EmpleadosDAO {
                 empleado.setCedula(rs.getString("cedula"));
                 empleado.setNombre(rs.getString("nombre"));
                 empleado.setApellido(rs.getString("apellido"));
-                empleado.setFecha(rs.getInt("fecha"));
+                empleado.setFecha(rs.getString("fecha"));
                 empleado.setDireccion(rs.getString("direccion"));
                 empleado.setNombre_user(rs.getString("nombre_user"));
                 empleado.setId_usuario(rs.getInt("id_usuario"));

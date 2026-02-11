@@ -540,6 +540,9 @@ public class EmpleadoPizza extends javax.swing.JFrame {
                     NuevoUser nuevo = new NuevoUser();
                     nuevo.setVisible(true);
                 }
+                else{
+                    limpiarceldas();
+                }
             }
 
         } else {
@@ -549,6 +552,10 @@ public class EmpleadoPizza extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnbuscarActionPerformed
 
+        public void limpiarceldas() {
+        txtbuscar.setText("");
+
+    }
     private void btnnuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnuevoActionPerformed
         NuevoUser clienteN = new NuevoUser();
         clienteN.setVisible(true);

@@ -14,6 +14,10 @@ import java.awt.event.MouseListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
+import java.util.Calendar;
 
 public class EmpleadosController implements ActionListener, MouseListener, KeyListener {
 
@@ -49,7 +53,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
         this.admin.txtcedula_emp.addKeyListener(this);
         this.admin.txtnombre_emp.addKeyListener(this);
         this.admin.txtapellido_emp.addKeyListener(this);
-        this.admin.txtfecha_emp.addKeyListener(this);
+        //this.admin.txtfecha_emp.addKeyListener(this);
     }
 
     @Override
@@ -58,12 +62,18 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
             try {
                 if (admin.txtcedula_emp.getText().equals("") || admin.txtnombre_emp.getText().equals("")
                         || admin.txtapellido_emp.getText().equals("")
-                        || admin.txtdireccion_emp.getText().equals("") || admin.txtfecha_emp.getText().equals("")
+                        || admin.txtdireccion_emp.getText().equals("") || admin.txt_fechaN.getDate() == null
                         || admin.txtnombre_user.getText().equals("")
                         || admin.txtpassword.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Todos los campos deben ser llenados");
 
                 } else {
+                    
+                    if(!esMayorDeEdad(admin.txt_fechaN.getDate())){
+                        JOptionPane.showMessageDialog(null, "el empleado debe ser mayor de edad");
+                        return;
+                    
+                    }
                     usuario.setRol(admin.ComboBox_Rol.getSelectedItem().toString());
                     usuario.setNombre_user(admin.txtnombre_user.getText().trim());
                     usuario.setPassword(admin.txtpassword.getText().trim());
@@ -80,7 +90,9 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
                             empleados.setNombre(admin.txtnombre_emp.getText().trim());
                             empleados.setApellido(admin.txtapellido_emp.getText().trim());
                             empleados.setDireccion(admin.txtdireccion_emp.getText().trim());
-                            empleados.setFecha(Integer.parseInt(admin.txtfecha_emp.getText()));
+                            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                            String fechaFormateada = formato.format(admin.txt_fechaN.getDate());
+                            empleados.setFecha(fechaFormateada);
                             empleados.setId_usuario(usuarioregistrado);
 
                             if (empleadosdao.registrarempleado(empleados)) {
@@ -104,12 +116,10 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
                 JOptionPane.showMessageDialog(null, "Debe ingresar una edad correcta");
             }
 
-        } else if (e.getSource() == admin.btnmodificar_emp)
-
-        {
+        } else if (e.getSource() == admin.btnmodificar_emp) {
             if (admin.txtcedula_emp.getText().equals("") || admin.txtnombre_emp.getText().equals("")
                     || admin.txtapellido_emp.getText().equals("")
-                    || admin.txtdireccion_emp.getText().equals("") || admin.txtfecha_emp.getText().equals("")
+                    || admin.txtdireccion_emp.getText().equals("") || admin.txt_fechaN == null
                     || admin.txtnombre_user.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Todos los campos deben ser llenados");
 
@@ -122,12 +132,14 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
                     empleados.setCedula(admin.txtcedula_emp.getText().trim());
                     empleados.setNombre(admin.txtnombre_emp.getText().trim());
                     empleados.setApellido(admin.txtapellido_emp.getText().trim());
-                    empleados.setFecha(Integer.parseInt(admin.txtfecha_emp.getText()));
+                    SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                    String fechaFormateada = formato.format(admin.txt_fechaN.getDate());
+                    empleados.setFecha(fechaFormateada);
                     empleados.setDireccion(admin.txtdireccion_emp.getText().trim());
                     empleados.setId_usuario(id_usuario);
                     empleados.setNombre_user(admin.txtnombre_user.getText().trim());
                     empleados.setPassword(admin.txtpassword.getText().trim());
-                     if (admin.txttelefono_cliente.getText().length() != 11){
+                    if (admin.txttelefono_cliente.getText().length() != 11) {
                         JOptionPane.showMessageDialog(null, "El numero debe tener 11 dígitos");
                     }
 
@@ -148,7 +160,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
         } else if (e.getSource() == admin.btneliminar_emp) {
             if (admin.txtcedula_emp.getText().equals("") || admin.txtnombre_emp.getText().equals("")
                     || admin.txtapellido_emp.getText().equals("")
-                    || admin.txtdireccion_emp.getText().equals("") || admin.txtfecha_emp.getText().equals("")
+                    || admin.txtdireccion_emp.getText().equals("") || admin.txt_fechaN.getDate() == null
                     || admin.txtnombre_user.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Todos los campos deben ser llenados");
 
@@ -191,7 +203,17 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
             admin.txtcedula_emp.setText(modelotabla.getValueAt(filaseleccionada, 1).toString());
             admin.txtnombre_emp.setText(modelotabla.getValueAt(filaseleccionada, 2).toString());
             admin.txtapellido_emp.setText(modelotabla.getValueAt(filaseleccionada, 3).toString());
-            admin.txtfecha_emp.setText(modelotabla.getValueAt(filaseleccionada, 4).toString());
+            try {
+                // Obtener el String de la tabla ("yyyy-MM-dd")
+                String fechaString = modelotabla.getValueAt(filaseleccionada, 4).toString();
+                // Convertir String a Date
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                Date fechaDate = formato.parse(fechaString);
+                // Establecer la fecha en el calendario
+                admin.txt_fechaN.setDate(fechaDate);
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(null, "Error al cargar la fecha: " + ex);
+            }
             admin.txtdireccion_emp.setText(modelotabla.getValueAt(filaseleccionada, 5).toString());
             admin.txtnombre_user.setText(modelotabla.getValueAt(filaseleccionada, 6).toString());
 
@@ -222,7 +244,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
                 e.consume();
                 java.awt.Toolkit.getDefaultToolkit().beep();
             }
-        } else if (e.getSource() == admin.txtcedula_emp || e.getSource() == admin.txtfecha_emp) {
+        } else if (e.getSource() == admin.txtcedula_emp) {
             if (!Character.isDigit(c)) {
                 e.consume();
                 java.awt.Toolkit.getDefaultToolkit().beep();
@@ -255,7 +277,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
         modelotabla.addColumn("cedula");
         modelotabla.addColumn("nombre");
         modelotabla.addColumn("apellido");
-        modelotabla.addColumn("edad");
+        modelotabla.addColumn("F.Nacimiento");
         modelotabla.addColumn("direccion");
         modelotabla.addColumn("nombre_user");
         modelotabla.addColumn("id_usuario");
@@ -271,15 +293,15 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
         modelotabla.setRowCount(0);
         List<Empleados> empleado = empleadosdao.listaempleados();
         for (Empleados e : empleado) {
-            modelotabla.addRow(new Object[] {
-                    e.getId_emp(),
-                    e.getCedula(),
-                    e.getNombre(),
-                    e.getApellido(),
-                    e.getFecha(),
-                    e.getDireccion(),
-                    e.getNombre_user(),
-                    e.getId_usuario()
+            modelotabla.addRow(new Object[]{
+                e.getId_emp(),
+                e.getCedula(),
+                e.getNombre(),
+                e.getApellido(),
+                e.getFecha(),
+                e.getDireccion(),
+                e.getNombre_user(),
+                e.getId_usuario()
 
             });
 
@@ -292,7 +314,7 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
         admin.txtnombre_emp.setText("");
         admin.txtapellido_emp.setText("");
         admin.txtdireccion_emp.setText("");
-        admin.txtfecha_emp.setText("");
+        admin.txt_fechaN.setDate(null);
         admin.txtnombre_user.setText("");
         admin.txtpassword.setText("");
 
@@ -316,20 +338,34 @@ public class EmpleadosController implements ActionListener, MouseListener, KeyLi
         modelotabla = (DefaultTableModel) admin.jTable_emp.getModel();
 
         for (Empleados e : empleado) {
-            modelotabla.addRow(new Object[] {
-                    e.getId_emp(),
-                    e.getCedula(),
-                    e.getNombre(),
-                    e.getApellido(),
-                    e.getFecha(),
-                    e.getDireccion(),
-                    e.getNombre_user(),
-                    e.getId_usuario()
+            modelotabla.addRow(new Object[]{
+                e.getId_emp(),
+                e.getCedula(),
+                e.getNombre(),
+                e.getApellido(),
+                e.getFecha(),
+                e.getDireccion(),
+                e.getNombre_user(),
+                e.getId_usuario()
 
             });
 
         }
 
+    }
+
+    private boolean esMayorDeEdad(Date fechaNacimiento) {
+        Calendar hoy = Calendar.getInstance();
+        Calendar nacimiento = Calendar.getInstance();
+        nacimiento.setTime(fechaNacimiento);
+
+        int anios = hoy.get(Calendar.YEAR) - nacimiento.get(Calendar.YEAR);
+
+        if (hoy.get(Calendar.DAY_OF_YEAR) < nacimiento.get(Calendar.DAY_OF_YEAR)) {
+            anios--;
+        }
+
+        return anios >= 18;
     }
 
 }

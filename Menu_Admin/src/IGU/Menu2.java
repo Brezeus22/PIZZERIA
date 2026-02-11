@@ -189,7 +189,6 @@ public class Menu2 extends javax.swing.JFrame {
         btnmodificar_emp = new javax.swing.JButton();
         btneliminar_emp = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
-        txtfecha_emp = new javax.swing.JTextField();
         btnguardar_emp = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
         jLabel44 = new javax.swing.JLabel();
@@ -198,6 +197,7 @@ public class Menu2 extends javax.swing.JFrame {
         txtpassword = new javax.swing.JPasswordField();
         txtnombre_user = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
+        txt_fechaN = new com.toedter.calendar.JDateChooser();
         jLabel34 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable_emp = new javax.swing.JTable();
@@ -907,7 +907,7 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel31.setText("Direccion:");
 
         jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel32.setText("Fecha de Nacim:");
+        jLabel32.setText("F.Nacimiento");
 
         btnmodificar_emp.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnmodificar_emp.setText("Modificar");
@@ -943,6 +943,9 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel28.setText("Nombre:");
 
+        txt_fechaN.setBackground(new java.awt.Color(255, 255, 255));
+        txt_fechaN.setForeground(new java.awt.Color(0, 0, 0));
+
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
@@ -976,10 +979,10 @@ public class Menu2 extends javax.swing.JFrame {
                         .addComponent(jLabel22)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtfecha_emp, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                     .addComponent(txtdireccion_emp, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                     .addComponent(ComboBox_Rol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtpassword))
+                    .addComponent(txtpassword)
+                    .addComponent(txt_fechaN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
@@ -1007,8 +1010,8 @@ public class Menu2 extends javax.swing.JFrame {
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtnombre_emp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel32)
-                    .addComponent(txtfecha_emp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel28))
+                    .addComponent(jLabel28)
+                    .addComponent(txt_fechaN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -1050,13 +1053,18 @@ public class Menu2 extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "id_emp", "Cedula", "Nombre", "Apellido", "Fecha de Nacim", "Direccion", "nombre_user"
+                "id_emp", "Cedula", "Nombre", "Apellido", "F.Nacimiento", "Direccion", "nombre_user"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane6.setViewportView(jTable_emp);
-        if (jTable_emp.getColumnModel().getColumnCount() > 0) {
-            jTable_emp.getColumnModel().getColumn(2).setResizable(false);
-        }
 
         jLabel33.setBackground(new java.awt.Color(255, 255, 255));
         jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -1414,6 +1422,7 @@ public class Menu2 extends javax.swing.JFrame {
     public javax.swing.JTable tabla_producto;
     public javax.swing.JTable table_cliente;
     public javax.swing.JTextField txt_fecha;
+    public com.toedter.calendar.JDateChooser txt_fechaN;
     public javax.swing.JTextField txt_total_pagar;
     public javax.swing.JTextField txtapellido_clliente;
     public javax.swing.JTextField txtapellido_emp;
@@ -1426,7 +1435,6 @@ public class Menu2 extends javax.swing.JFrame {
     public javax.swing.JTextField txtdescripcion;
     public javax.swing.JTextField txtdireccion_cliente;
     public javax.swing.JTextField txtdireccion_emp;
-    public javax.swing.JTextField txtfecha_emp;
     public javax.swing.JTextField txtnom_cliente;
     public javax.swing.JTextField txtnombre_emp;
     public javax.swing.JTextField txtnombre_producto;
