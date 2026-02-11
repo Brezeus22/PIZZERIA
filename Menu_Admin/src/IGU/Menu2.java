@@ -131,6 +131,8 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         txt_fecha = new javax.swing.JTextField();
         jComboBox_cliente = new javax.swing.JComboBox<>();
+        jLabel27 = new javax.swing.JLabel();
+        txtbuscar_ventas = new com.toedter.calendar.JDateChooser();
         jPanel_CLIENTES = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         table_cliente = new javax.swing.JTable();
@@ -505,8 +507,8 @@ public class Menu2 extends javax.swing.JFrame {
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel26.setText("Cliente:");
-        jPanel14.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, 90, -1));
+        jLabel26.setText("Buscador:");
+        jPanel14.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 40, 90, -1));
 
         txt_fecha.setEditable(false);
         txt_fecha.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -516,6 +518,12 @@ public class Menu2 extends javax.swing.JFrame {
 
         jComboBox_cliente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jPanel14.add(jComboBox_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 170, -1));
+
+        jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel27.setText("Cliente:");
+        jPanel14.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 90, -1));
+        jPanel14.add(txtbuscar_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, 170, -1));
 
         javax.swing.GroupLayout jPanel_VENTASLayout = new javax.swing.GroupLayout(jPanel_VENTAS);
         jPanel_VENTAS.setLayout(jPanel_VENTASLayout);
@@ -932,9 +940,6 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel28.setText("Nombre:");
 
-        txt_fechaN.setBackground(new java.awt.Color(255, 255, 255));
-        txt_fechaN.setForeground(new java.awt.Color(0, 0, 0));
-
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
@@ -987,7 +992,7 @@ public class Menu2 extends javax.swing.JFrame {
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(34, 34, 34)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtcedula_emp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -996,10 +1001,11 @@ public class Menu2 extends javax.swing.JFrame {
                         .addComponent(jLabel30))
                     .addComponent(btnguardar_emp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtnombre_emp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel32)
-                    .addComponent(jLabel28)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtnombre_emp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel32)
+                        .addComponent(jLabel28))
                     .addComponent(txt_fechaN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
@@ -1079,16 +1085,16 @@ public class Menu2 extends javax.swing.JFrame {
                     .addGroup(jPanel_EMPLEADOSLayout.createSequentialGroup()
                         .addGap(363, 363, 363)
                         .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         jPanel_EMPLEADOSLayout.setVerticalGroup(
             jPanel_EMPLEADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_EMPLEADOSLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel34)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel_EMPLEADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel33)
                     .addComponent(txtbuscar_emp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1107,6 +1113,14 @@ public class Menu2 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtdireccion_empActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdireccion_empActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtdireccion_empActionPerformed
+
+    private void txtpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtpasswordActionPerformed
 
         private void txtprecioActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtprecioActionPerformed
                 // TODO add your handling code here:
@@ -1357,6 +1371,7 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     public javax.swing.JLabel jLabel28;
     public javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
@@ -1416,6 +1431,7 @@ public class Menu2 extends javax.swing.JFrame {
     public javax.swing.JTextField txtbuscar__producto;
     public javax.swing.JTextField txtbuscar_cliente;
     public javax.swing.JTextField txtbuscar_emp;
+    public com.toedter.calendar.JDateChooser txtbuscar_ventas;
     public javax.swing.JTextField txtcedula_cliente;
     public javax.swing.JTextField txtcedula_emp;
     public javax.swing.JTextField txtcodigo;

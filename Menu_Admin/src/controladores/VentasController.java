@@ -10,6 +10,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -28,11 +32,27 @@ public class VentasController implements ActionListener, MouseListener, KeyListe
 
         this.admin.jComboBox_cliente.addActionListener(this);
         this.admin.jTable_ventas.addMouseListener(this);
+
+        // Agregar listener al buscador de fecha
+        this.admin.txtbuscar_ventas.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            if ("date".equals(evt.getPropertyName())) {
+                Date fechaSeleccionada = admin.txtbuscar_ventas.getDate();
+                if (fechaSeleccionada != null) {
+                    // Formatear la fecha a formato SQL (yyyy-MM-dd)
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    String fechaFormateada = sdf.format(fechaSeleccionada);
+                    filtrarVentasPorFecha(fechaFormateada);
+                } else {
+                    // Si se borra la fecha, mostrar todas las ventas
+                    listarVentas(0);
+                }
+            }
+        });
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
         if (e.getSource() == admin.jComboBox_cliente) {
             // Obtener el cliente seleccionado
             ClienteItem item = (ClienteItem) admin.jComboBox_cliente.getSelectedItem();
@@ -52,10 +72,10 @@ public class VentasController implements ActionListener, MouseListener, KeyListe
             String nombreCliente = admin.jTable_ventas.getValueAt(filaseleccionada, 0).toString();
             String fecha = admin.jTable_ventas.getValueAt(filaseleccionada, 2).toString();
             String total = admin.jTable_ventas.getValueAt(filaseleccionada, 3).toString();
-            
+
             admin.txt_fecha.setText(fecha);
             admin.txt_total_pagar.setText(total);
-            
+
             seleccionarClienteEnCombo(nombreCliente);
 
         }
@@ -88,27 +108,26 @@ public class VentasController implements ActionListener, MouseListener, KeyListe
     @Override
     public void keyReleased(KeyEvent e) {
     }
-    
+
     public void iniciar() {
         llenarComboClientes();
         listarVentas(0); // 0 = Traer todos sin filtro
     }
-    
-    
+
     private void llenarComboClientes() {
         List<Clientes> lista = clientesDao.obtenertodoslosclientes();
         DefaultComboBoxModel model = new DefaultComboBoxModel();
-        
+
         // Agregamos una opción por defecto
         model.addElement(new ClienteItem(0, "Todos los clientes"));
-        
+
         for (Clientes c : lista) {
             // Usamos una clase auxiliar para guardar ID y Nombre juntos
             model.addElement(new ClienteItem(c.getId_cliente(), c.getNombre() + " " + c.getApellido()));
         }
         admin.jComboBox_cliente.setModel(model);
     }
-    
+
     private void listarVentas(int id_cliente) {
         List<Object[]> ventas = ventasDao.listarventasdetalles(id_cliente);
         modelo = (DefaultTableModel) admin.jTable_ventas.getModel();
@@ -116,14 +135,15 @@ public class VentasController implements ActionListener, MouseListener, KeyListe
 
         for (Object[] v : ventas) {
             // Solo agregamos las columnas visibles: Nombre, Producto, Fecha, Total
-            modelo.addRow(new Object[]{v[0], v[1], v[2], v[3]});
+            modelo.addRow(new Object[] { v[0], v[1], v[2], v[3] });
         }
     }
-    
+
     private void seleccionarClienteEnCombo(String nombreCompleto) {
-        // Evitamos que se dispare el evento del actionListener al cambiar programáticamente
+        // Evitamos que se dispare el evento del actionListener al cambiar
+        // programáticamente
         admin.jComboBox_cliente.removeActionListener(this);
-        
+
         for (int i = 0; i < admin.jComboBox_cliente.getItemCount(); i++) {
             Object item = admin.jComboBox_cliente.getItemAt(i);
             if (item.toString().equals(nombreCompleto)) {
@@ -131,11 +151,22 @@ public class VentasController implements ActionListener, MouseListener, KeyListe
                 break;
             }
         }
-        
+
         // Reactivamos el listener
         admin.jComboBox_cliente.addActionListener(this);
     }
-    
+
+    private void filtrarVentasPorFecha(String fecha) {
+        List<Object[]> ventas = ventasDao.listarventasporFecha(fecha);
+        modelo = (DefaultTableModel) admin.jTable_ventas.getModel();
+        modelo.setRowCount(0); // Limpiar tabla
+
+        for (Object[] v : ventas) {
+            // Solo agregamos las columnas visibles: Nombre, Producto, Fecha, Total
+            modelo.addRow(new Object[] { v[0], v[1], v[2], v[3] });
+        }
+    }
+
     class ClienteItem {
         private int id;
         private String nombre;
@@ -145,8 +176,10 @@ public class VentasController implements ActionListener, MouseListener, KeyListe
             this.nombre = nombre;
         }
 
-        public int getId() { return id; }
-        
+        public int getId() {
+            return id;
+        }
+
         @Override
         public String toString() {
             return nombre; // Esto es lo que se ve en el ComboBox

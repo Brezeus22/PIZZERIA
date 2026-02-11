@@ -120,16 +120,56 @@ public class VentasDAO {
                 fila[2] = rs.getString("fecha");
                 // 3: Total Pagado
                 fila[3] = rs.getDouble("total_pagado");
-                // 4: ID Cliente 
+                // 4: ID Cliente
                 fila[4] = rs.getInt("id_cliente");
-                // 5: ID Venta 
+                // 5: ID Venta
                 fila[5] = rs.getInt("id_venta");
 
                 lista.add(fila);
 
             }
         } catch (SQLException e) {
-            System.err.println("Error al mostrar las ventas"+ e.getMessage());
+            System.err.println("Error al mostrar las ventas" + e.getMessage());
+        }
+        return lista;
+    }
+
+    // Método para listar ventas filtradas por fecha
+    public List<Object[]> listarventasporFecha(String fecha) {
+        List<Object[]> lista = new ArrayList<>();
+
+        String sql = "SELECT v.id_venta, "
+                + "c.nombre, c.apellido, c.id_cliente, "
+                + "v.fecha, "
+                + "GROUP_CONCAT(p.nombre SEPARATOR ', ') as productos, "
+                + "SUM(f.total_costo) as total_pagado "
+                + "FROM ventas v "
+                + "INNER JOIN clientes c ON v.id_cliente = c.id_cliente "
+                + "INNER JOIN facturas f ON v.id_venta = f.id_venta "
+                + "INNER JOIN productos p ON f.codigo = p.codigo "
+                + "WHERE DATE(v.fecha) = ? "
+                + "GROUP BY v.id_venta ORDER BY v.fecha DESC";
+
+        try {
+            con = ConexionSQL.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, fecha);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Object[] fila = new Object[6];
+
+                fila[0] = rs.getString("nombre") + " " + rs.getString("apellido");
+                fila[1] = rs.getString("productos");
+                fila[2] = rs.getString("fecha");
+                fila[3] = rs.getDouble("total_pagado");
+                fila[4] = rs.getInt("id_cliente");
+                fila[5] = rs.getInt("id_venta");
+
+                lista.add(fila);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al filtrar ventas por fecha: " + e.getMessage());
         }
         return lista;
     }
