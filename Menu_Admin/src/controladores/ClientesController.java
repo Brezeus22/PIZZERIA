@@ -163,9 +163,9 @@ public class ClientesController implements ActionListener, MouseListener, KeyLis
     public void inicializartabla() {
         modeloTabla = new DefaultTableModel();
         modeloTabla.addColumn("id");
+        modeloTabla.addColumn("cedula");
         modeloTabla.addColumn("nombre");
         modeloTabla.addColumn("apellido");
-        modeloTabla.addColumn("cedula");
         modeloTabla.addColumn("telefono");
         modeloTabla.addColumn("direccion");
         admin.table_cliente.setModel(modeloTabla);
@@ -178,9 +178,9 @@ public class ClientesController implements ActionListener, MouseListener, KeyLis
         for (Clientes c : clientes) {
             modeloTabla.addRow(new Object[]{
                 c.getId_cliente(),
+                c.getCedula(),
                 c.getNombre(),
                 c.getApellido(),
-                c.getCedula(),
                 c.getTelefono(),
                 c.getDireccion(),});
 
@@ -198,9 +198,9 @@ public class ClientesController implements ActionListener, MouseListener, KeyLis
             admin.btneliminar_cliente.setEnabled(true);
 
             idClienteSeleccionado = (int) modeloTabla.getValueAt(fliasaleccionada, 0);
-            admin.txtnom_cliente.setText(modeloTabla.getValueAt(fliasaleccionada, 1).toString());
-            admin.txtapellido_clliente.setText(modeloTabla.getValueAt(fliasaleccionada, 2).toString());
-            admin.txtcedula_cliente.setText(modeloTabla.getValueAt(fliasaleccionada, 3).toString());
+            admin.txtcedula_cliente.setText(modeloTabla.getValueAt(fliasaleccionada, 1).toString());
+            admin.txtnom_cliente.setText(modeloTabla.getValueAt(fliasaleccionada, 2).toString());
+            admin.txtapellido_clliente.setText(modeloTabla.getValueAt(fliasaleccionada, 3).toString());
             admin.txttelefono_cliente.setText(modeloTabla.getValueAt(fliasaleccionada, 4).toString());
             admin.txtdireccion_cliente.setText(modeloTabla.getValueAt(fliasaleccionada, 5).toString());
 
@@ -269,9 +269,9 @@ public class ClientesController implements ActionListener, MouseListener, KeyLis
         for (Clientes c : cliente) {
             modeloTabla.addRow(new Object[]{
                 c.getId_cliente(),
+                c.getCedula(),
                 c.getNombre(),
                 c.getApellido(),
-                c.getCedula(),
                 c.getTelefono(),
                 c.getDireccion()
             });
